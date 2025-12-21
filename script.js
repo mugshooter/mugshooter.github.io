@@ -1,4 +1,3 @@
-// Данные для наполнения
 const semesters = [
     { id: 1, title: "1 Семестр", subjects: [
         {name: "Дискретная математика", link: "https://github.com/mugshooter/repository/tree/main/1%20SEM/Дискретная%20математика%20для%20программистов"},
@@ -67,7 +66,7 @@ const semesters = [
         {name: "Английский язык", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Английский%207%20SEM"}
     ]},
     { id: 8, title: "8 Семестр", subjects: [
-        {name: "В разработке", link: "#"}
+        {name: "Дипломное проектирование", link: "#"}
     ]}
 ];
 
@@ -80,10 +79,10 @@ const internships = [
 ];
 
 const courseWorks = [
-    { title: "Курсовая работа 1", subject: "Информационные технологии в физике", link: "https://github.com/mugshooter/repository/tree/main/1%20SEM/Информационные%20технологии%20в%20физике/Курсовая(%201%20курс)" },
-    { title: "Курсовая работа 2", subject: "Технологии компьютерного моделирования", link: "https://github.com/mugshooter/repository/tree/main/4%20SEM/Технологии%20компьютерного%20моделирования/Курсовая" },
+    { title: "Курсовая работа 1", subject: "ИТ в физике", link: "https://github.com/mugshooter/repository/tree/main/1%20SEM/Информационные%20технологии%20в%20физике/Курсовая(%201%20курс)" },
+    { title: "Курсовая работа 2", subject: "Технологии комп. моделирования", link: "https://github.com/mugshooter/repository/tree/main/4%20SEM/Технологии%20компьютерного%20моделирования/Курсовая" },
     { title: "Курсовая работа 3", subject: "Пакеты прикладных программ", link: "https://github.com/mugshooter/repository/tree/main/5%20SEM/Пакеты%20прикладных%20программ/Курсовая" },
-    { title: "Курсовая работа 4", subject: "...", link: "#" }
+    { title: "Курсовая работа 4", subject: "В разработке", link: "#" }
 ];
 
 const vkr = {
@@ -94,77 +93,67 @@ const vkr = {
 
 const contentDiv = document.getElementById('content');
 
-// Шаблоны страниц
 const pages = {
     home: `
         <section class="hero">
             <h1>Гневнов Артем</h1>
-            <p>Студент ИВТ РГПУ им. И.А. Герцена. Добро пожаловать в моё веб-портфолио, где собраны все мои работы и достижения за время обучения.</p>
+            <h3>Студент ИВТ РГПУ им. И.А. Герцена (гр. 2.1)</h3>
+            <p>Добро пожаловать в моё веб-портфолио, где собраны все мои учебные работы, практики и программные проекты.</p>
         </section>
     `,
     contacts: `
         <section class="hero">
-            <h2>Связаться со мной</h2>
+            <h2>Контакты</h2>
             <div class="grid">
-                <a href="#" class="card"><h3>Telegram</h3><p>@mugshooter</p></a>
-                <a href="mailto:email@example.com" class="card"><h3>Email</h3><p>email@example.com</p></a>
-                <a href="#" class="card"><h3>GitHub</h3><p>github.com/yourprofile</p></a>
+                <a href="https://t.me/your_username" target="_blank" class="card"><h3>Telegram</h3><p>@your_username ↗</p></a>
+                <a href="mailto:your_email@mail.ru" class="card"><h3>Email</h3><p>Написать письмо ↗</p></a>
+                <a href="https://github.com/mugshooter" target="_blank" class="card"><h3>GitHub</h3><p>github.com/mugshooter ↗</p></a>
             </div>
         </section>
     `,
     portfolio: `
-        <h2 style="text-align:center">Мои работы</h2>
-        
+        <h2 style="text-align:center">Портфолио</h2>
         <h3 class="section-subtitle">🎓 Выпускная квалификационная работа</h3>
         <div id="vkr-container"></div>
-
         <h3 class="section-subtitle">📑 Курсовые работы</h3>
         <div class="grid" id="cw-grid"></div>
-
         <h3 class="section-subtitle">🛠️ Практики</h3>
         <div class="grid" id="intern-grid"></div>
-
         <h3 class="section-subtitle">📚 Семестры</h3>
         <div class="grid" id="sem-grid"></div>
     `
 };
 
-// Функция навигации
 function navigate(pageId) {
     contentDiv.innerHTML = pages[pageId];
     if (pageId === 'portfolio') renderPortfolio();
     
-    // Анимация карточек
     const cards = document.querySelectorAll('.card');
     cards.forEach((card, i) => card.style.animationDelay = `${i * 0.05}s`);
 }
 
 function renderPortfolio() {
-    // ВКР
     document.getElementById('vkr-container').innerHTML = `
         <a href="${vkr.link}" target="_blank" class="card" style="border: 2px solid var(--primary)">
             <h3>${vkr.title}</h3>
             <p>${vkr.topic}</p>
         </a>
     `;
-    // Курсовые
     courseWorks.forEach(cw => {
         document.getElementById('cw-grid').innerHTML += `
             <a href="${cw.link}" target="_blank" class="card"><h3>${cw.title}</h3><p>${cw.subject}</p></a>
         `;
     });
-    // Практики
     internships.forEach(int => {
         document.getElementById('intern-grid').innerHTML += `
-            <a href="${int.link}" target="_blank" class="card"><h3>${int.title}</h3><p>Отчёт и материалы ↗</p></a>
+            <a href="${int.link}" target="_blank" class="card"><h3>${int.title}</h3><p>Материалы ↗</p></a>
         `;
     });
-    // Семестры
     semesters.forEach(sem => {
         const div = document.createElement('div');
         div.className = 'card';
         div.style.cursor = 'pointer';
-        div.innerHTML = `<h3>${sem.title}</h3><p>Дисциплины семестра</p>`;
+        div.innerHTML = `<h3>${sem.title}</h3><p>Дисциплины</p>`;
         div.onclick = () => showSubjects(sem);
         document.getElementById('sem-grid').appendChild(div);
     });
@@ -172,27 +161,30 @@ function renderPortfolio() {
 
 function showSubjects(sem) {
     contentDiv.innerHTML = `
-        <button class="btn-back" onclick="navigate('portfolio')">← Назад к портфолио</button>
+        <button class="btn-back" onclick="navigate('portfolio')">← К портфолио</button>
         <h2>${sem.title}</h2>
         <div class="grid">
             ${sem.subjects.map(s => `
                 <a href="${s.link}" target="_blank" class="card">
                     <h3>${s.name}</h3>
-                    <p>Посмотреть проект на GitHub ↗</p>
+                    <p>GitHub Repo ↗</p>
                 </a>
             `).join('')}
         </div>
     `;
 }
 
-// Переключатель темы
 const themeBtn = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
 themeBtn.onclick = () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    const newTheme = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
 };
 
-// Инициализация меню
 document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
     link.onclick = (e) => {
         e.preventDefault();
@@ -200,5 +192,4 @@ document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
     };
 });
 
-// Запуск главной
 navigate('home');
