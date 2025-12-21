@@ -134,14 +134,24 @@ const pages = {
     `
 };
 
-function navigate(pageId, updateHistory = true) {
+function navigate(pageId, updateHistory = true, extra = null) {
     contentDiv.innerHTML = pages[pageId] || pages['home'];
-    if (pageId === 'portfolio') renderPortfolio();
+    
+    if (pageId === 'portfolio') {
+        renderPortfolio();
+        if (extra) {
+            const sem = semesters.find(s => s.id == extra);
+            if (sem) showSubjects(sem, false); 
+        }
+    }
     
     if (updateHistory) {
         const url = new URL(window.location);
         url.searchParams.set('page', pageId);
-        window.history.pushState({ pageId }, '', url);
+        if (extra) url.searchParams.set('sem', extra);
+        else url.searchParams.delete('sem');
+        
+        window.history.pushState({ pageId, semId: extra }, '', url);
     }
 
     const cards = document.querySelectorAll('.card');
@@ -169,17 +179,29 @@ function renderPortfolio() {
     });
 }
 
-function showSubjects(sem) {
+function showSubjects(sem, updateHistory = true) {
+    if (updateHistory) {
+        navigate('portfolio', true, sem.id);
+        return;
+    }
+
     contentDiv.innerHTML = `
         <button class="btn-back" onclick="navigate('portfolio')"><i class="fas fa-arrow-left"></i> Назад</button>
         <h2>${sem.title}</h2>
-        <div class="grid">${sem.subjects.map(s => `<a href="${s.link}" target="_blank" class="card"><h3>${s.name}</h3><p>GitHub Repo ↗</p></a>`).join('')}</div>
+        <div class="grid">${sem.subjects.map(s => `
+            <a href="${s.link}" target="_blank" class="card">
+                <h3>${s.name}</h3>
+                <p>GitHub Repo ↗</p>
+            </a>`).join('')}
+        </div>
     `;
 }
 
 window.addEventListener('popstate', (event) => {
-    const page = event.state?.pageId || new URLSearchParams(window.location.search).get('page') || 'home';
-    navigate(page, false);
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page') || 'home';
+    const sem = params.get('sem');
+    navigate(page, false, sem);
 });
 
 document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
@@ -192,5 +214,8 @@ themeBtn.onclick = () => {
     document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
 };
 
-const initialPage = new URLSearchParams(window.location.search).get('page') || 'home';
-navigate(initialPage, false);
+// Запуск при загрузке страницы
+const urlParams = new URLSearchParams(window.location.search);
+const initialPage = urlParams.get('page') || 'home';
+const initialSem = urlParams.get('sem');
+navigate(initialPage, false, initialSem);
