@@ -96,39 +96,36 @@ const contentDiv = document.getElementById('content');
 const pages = {
     home: `
         <section class="hero">
-            <i class="fas fa-user-graduate" style="font-size: 4rem; color: var(--primary); margin-bottom: 20px;"></i>
+            <i class="fas fa-user-circle" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px;"></i>
             <h1>Гневнов Артем</h1>
-            <h3>Студент ИВТ РГПУ им. И.А. Герцена (гр. 2.1)</h3>
-            <p>Специализация: Разработка программного обеспечения</p>
+            <h3>Студент ИВТ РГПУ им. И.А. Герцена</h3>
+            <p>Направление: Разработка программного обеспечения (Группа 2.1)</p>
         </section>
     `,
     contacts: `
         <section class="hero">
-            <h2>Связаться со мной</h2>
+            <h2>Контакты</h2>
             <div class="grid">
                 <a href="https://t.me/mugshooter" target="_blank" class="card">
-                    <i class="fab fa-telegram" style="font-size: 2rem; color: #229ED9;"></i>
-                    <h3>Telegram</h3>
-                    <p>@mugshooter ↗</p>
+                    <i class="fab fa-telegram" style="color: #229ED9;"></i>
+                    <h3>Telegram</h3><p>@mugshooter ↗</p>
                 </a>
                 <a href="https://github.com/mugshooter" target="_blank" class="card">
-                    <i class="fab fa-github" style="font-size: 2rem;"></i>
-                    <h3>GitHub</h3>
-                    <p>mugshooter ↗</p>
+                    <i class="fab fa-github"></i>
+                    <h3>GitHub</h3><p>mugshooter ↗</p>
                 </a>
-                <a href="mailto:your_email@mail.ru" class="card">
-                    <i class="fas fa-envelope" style="font-size: 2rem; color: #ea4335;"></i>
-                    <h3>Email</h3>
-                    <p>Написать мне ↗</p>
+                <a href="mailto:email@example.com" class="card">
+                    <i class="fas fa-envelope" style="color: #ea4335;"></i>
+                    <h3>Email</h3><p>Написать письмо ↗</p>
                 </a>
             </div>
         </section>
     `,
     portfolio: `
         <h2 style="text-align:center">Портфолио</h2>
-        <h3 class="section-subtitle">🎓 Выпускная квалификационная работа</h3>
+        <h3 class="section-subtitle">🎓 Дипломная работа</h3>
         <div id="vkr-container"></div>
-        <h3 class="section-subtitle">📑 Курсовые работы</h3>
+        <h3 class="section-subtitle">📑 Курсовые проекты</h3>
         <div class="grid" id="cw-grid"></div>
         <h3 class="section-subtitle">🛠️ Практики</h3>
         <div class="grid" id="intern-grid"></div>
@@ -137,10 +134,16 @@ const pages = {
     `
 };
 
-function navigate(pageId) {
-    contentDiv.innerHTML = pages[pageId];
+function navigate(pageId, updateHistory = true) {
+    contentDiv.innerHTML = pages[pageId] || pages['home'];
     if (pageId === 'portfolio') renderPortfolio();
     
+    if (updateHistory) {
+        const url = new URL(window.location);
+        url.searchParams.set('page', pageId);
+        window.history.pushState({ pageId }, '', url);
+    }
+
     const cards = document.querySelectorAll('.card');
     cards.forEach((card, i) => card.style.animationDelay = `${i * 0.05}s`);
 }
@@ -148,24 +151,18 @@ function navigate(pageId) {
 function renderPortfolio() {
     document.getElementById('vkr-container').innerHTML = `
         <a href="${vkr.link}" target="_blank" class="card" style="border: 2px solid var(--primary)">
-            <h3>${vkr.title}</h3>
-            <p>${vkr.topic}</p>
+            <h3>${vkr.title}</h3><p>${vkr.topic}</p>
         </a>
     `;
     courseWorks.forEach(cw => {
-        document.getElementById('cw-grid').innerHTML += `
-            <a href="${cw.link}" target="_blank" class="card"><h3>${cw.title}</h3><p>${cw.subject}</p></a>
-        `;
+        document.getElementById('cw-grid').innerHTML += `<a href="${cw.link}" target="_blank" class="card"><h3>${cw.title}</h3><p>${cw.subject}</p></a>`;
     });
     internships.forEach(int => {
-        document.getElementById('intern-grid').innerHTML += `
-            <a href="${int.link}" target="_blank" class="card"><h3>${int.title}</h3><p>Материалы ↗</p></a>
-        `;
+        document.getElementById('intern-grid').innerHTML += `<a href="${int.link}" target="_blank" class="card"><h3>${int.title}</h3><p>Материалы ↗</p></a>`;
     });
     semesters.forEach(sem => {
         const div = document.createElement('div');
-        div.className = 'card';
-        div.style.cursor = 'pointer';
+        div.className = 'card'; div.style.cursor = 'pointer';
         div.innerHTML = `<h3>${sem.title}</h3><p>Дисциплины</p>`;
         div.onclick = () => showSubjects(sem);
         document.getElementById('sem-grid').appendChild(div);
@@ -174,35 +171,26 @@ function renderPortfolio() {
 
 function showSubjects(sem) {
     contentDiv.innerHTML = `
-        <button class="btn-back" onclick="navigate('portfolio')">← К портфолио</button>
+        <button class="btn-back" onclick="navigate('portfolio')"><i class="fas fa-arrow-left"></i> Назад</button>
         <h2>${sem.title}</h2>
-        <div class="grid">
-            ${sem.subjects.map(s => `
-                <a href="${s.link}" target="_blank" class="card">
-                    <h3>${s.name}</h3>
-                    <p>GitHub Repo ↗</p>
-                </a>
-            `).join('')}
-        </div>
+        <div class="grid">${sem.subjects.map(s => `<a href="${s.link}" target="_blank" class="card"><h3>${s.name}</h3><p>GitHub Repo ↗</p></a>`).join('')}</div>
     `;
 }
 
-const themeBtn = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', savedTheme);
-
-themeBtn.onclick = () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const newTheme = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-};
-
-document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
-    link.onclick = (e) => {
-        e.preventDefault();
-        navigate(e.target.dataset.page);
-    };
+window.addEventListener('popstate', (event) => {
+    const page = event.state?.pageId || new URLSearchParams(window.location.search).get('page') || 'home';
+    navigate(page, false);
 });
 
-navigate('home');
+document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
+    link.onclick = (e) => { e.preventDefault(); navigate(e.target.dataset.page); };
+});
+
+const themeBtn = document.getElementById('theme-toggle');
+themeBtn.onclick = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+};
+
+const initialPage = new URLSearchParams(window.location.search).get('page') || 'home';
+navigate(initialPage, false);
