@@ -99,7 +99,7 @@ const pages = {
             <i class="fas fa-user-circle" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px;"></i>
             <h1>Гневнов Артем</h1>
             <h3>Студент ИВТ РГПУ им. И.А. Герцена</h3>
-            <p>Направление: Разработка программного обеспечения (Группа 2.1)</p>
+            <p>В этом портфолио представлены мои работы и проекты, реализованные в ходе обучения.</p>
         </section>
     `,
     contacts: `
@@ -114,7 +114,7 @@ const pages = {
                     <i class="fab fa-github"></i>
                     <h3>GitHub</h3><p>mugshooter ↗</p>
                 </a>
-                <a href="mailto:email@example.com" class="card">
+                <a href="mailto:gnevnov2016@gmail.com" class="card">
                     <i class="fas fa-envelope" style="color: #ea4335;"></i>
                     <h3>Email</h3><p>Написать письмо ↗</p>
                 </a>
@@ -125,7 +125,7 @@ const pages = {
         <h2 style="text-align:center">Портфолио</h2>
         <h3 class="section-subtitle">🎓 Дипломная работа</h3>
         <div id="vkr-container"></div>
-        <h3 class="section-subtitle">📑 Курсовые проекты</h3>
+        <h3 class="section-subtitle">📑 Курсовые работы</h3>
         <div class="grid" id="cw-grid"></div>
         <h3 class="section-subtitle">🛠️ Практики</h3>
         <div class="grid" id="intern-grid"></div>
