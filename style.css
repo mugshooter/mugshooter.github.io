@@ -118,32 +118,4 @@ main { flex: 1; max-width: 1200px; margin: 0 auto; padding: 40px 20px; width: 10
     gap: 8px;
 }
 
-/* Стили для пасхалки */
-body.hacker-mode {
-    filter: sepia(100%) hue-rotate(90deg) brightness(80%) contrast(120%);
-    font-family: 'Courier New', Courier, monospace !important;
-}
-
-body.hacker-mode .card {
-    border: 1px solid #00ff00 !important;
-    background: #000 !important;
-    color: #00ff00 !important;
-}
-
-body.hacker-mode .navbar {
-    background: rgba(0, 40, 0, 0.9) !important;
-}
-
-/* Анимация встряски при активации */
-@keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    100% { transform: translate(0,0); }
-}
-
-.hacker-activated {
-    animation: shake 0.5s;
-}
-
 .footer { text-align: center; padding: 30px; background: rgba(0,0,0,0.03); font-size: 0.9rem; margin-top: 40px; }
