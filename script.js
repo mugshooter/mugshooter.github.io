@@ -96,7 +96,7 @@ const contentDiv = document.getElementById('content');
 const pages = {
     home: `
         <section class="hero">
-            <i class="fa-regular fa-eye" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px; display: inline-block;"></i>
+            <i class="fa-regular fa-eye main-icon" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px; display: inline-block;"></i>
             <h1>Гневнов Артем</h1>
             <h3>Студент ИВТ РГПУ им. И.А. Герцена</h3>
             <p>В этом портфолио представлены мои работы и проекты, реализованные в ходе обучения.</p>
