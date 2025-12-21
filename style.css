@@ -28,7 +28,6 @@ body {
     flex-direction: column;
 }
 
-/* Glassmorphism Navbar */
 .navbar {
     display: flex;
     justify-content: space-around;
@@ -66,6 +65,28 @@ main { flex: 1; max-width: 1200px; margin: 0 auto; padding: 40px 20px; width: 10
 .hero { text-align: center; padding: 60px 20px; }
 .hero h1 { font-size: 3.5rem; margin: 0; color: var(--primary); }
 .hero h3 { font-size: 1.5rem; margin: 10px 0; opacity: 0.9; }
+.hero i {
+    display: inline-block; 
+    animation: floating 4s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(10px, -15px); 
+    }
+    50% {
+        transform: translate(-10px, -20px); 
+    }
+    75% {
+        transform: translate(-5px, -10px); 
+    }
+    100% {
+        transform: translate(0, 0); 
+    }
+}
 
 .section-subtitle { 
     margin: 50px 0 25px; 

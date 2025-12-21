@@ -96,7 +96,7 @@ const contentDiv = document.getElementById('content');
 const pages = {
     home: `
         <section class="hero">
-            <i class="fas fa-user-circle" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px;"></i>
+            <i class="fa-regular fa-eye" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px; display: inline-block;"></i>
             <h1>Гневнов Артем</h1>
             <h3>Студент ИВТ РГПУ им. И.А. Герцена</h3>
             <p>В этом портфолио представлены мои работы и проекты, реализованные в ходе обучения.</p>
@@ -214,7 +214,6 @@ themeBtn.onclick = () => {
     document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
 };
 
-// Запуск при загрузке страницы
 const urlParams = new URLSearchParams(window.location.search);
 const initialPage = urlParams.get('page') || 'home';
 const initialSem = urlParams.get('sem');
