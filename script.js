@@ -194,3 +194,31 @@ themeBtn.onclick = () => {
 
 const initialPage = new URLSearchParams(window.location.search).get('page') || 'home';
 navigate(initialPage, false);
+
+// ПАСХАЛКА: Режим Хакера
+let logoClicks = 0;
+const logo = document.querySelector('.logo');
+
+logo.style.cursor = 'pointer'; // Делаем логотип визуально кликабельным
+
+logo.addEventListener('click', () => {
+    logoClicks++;
+    
+    if (logoClicks === 5) {
+        document.body.classList.toggle('hacker-mode');
+        document.body.classList.add('hacker-activated');
+        
+        // Звуковой эффект (опционально, системный писк)
+        console.log("System compromised... Hacker mode activated.");
+        
+        // Сбрасываем через 5 секунд анимацию тряски
+        setTimeout(() => {
+            document.body.classList.remove('hacker-activated');
+        }, 500);
+        
+        logoClicks = 0; // Сброс счетчика
+    }
+    
+    // Сброс счетчика, если пользователь долго не кликает
+    setTimeout(() => { logoClicks = 0; }, 2000);
+});
