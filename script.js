@@ -221,20 +221,20 @@ navigate(initialPage, false, initialSem);
 
 const burger = document.getElementById('burger');
 const navContainer = document.getElementById('nav-container');
-const navLinks = document.querySelectorAll('.nav-links a');
 
-// Открыть/закрыть по клику на бургер
 burger.onclick = () => {
     navContainer.classList.toggle('active');
-    burger.querySelector('i').classList.toggle('fa-bars');
-    burger.querySelector('i').classList.toggle('fa-times'); // Меняем полоски на крестик
+    const icon = burger.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
 };
 
-// Закрыть меню при клике на любую ссылку
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.onclick = (e) => {
+        e.preventDefault();
         navContainer.classList.remove('active');
         burger.querySelector('i').classList.add('fa-bars');
         burger.querySelector('i').classList.remove('fa-times');
-    });
+        navigate(e.target.dataset.page);
+    };
 });
