@@ -218,3 +218,23 @@ const urlParams = new URLSearchParams(window.location.search);
 const initialPage = urlParams.get('page') || 'home';
 const initialSem = urlParams.get('sem');
 navigate(initialPage, false, initialSem);
+
+const burger = document.getElementById('burger');
+const navContainer = document.getElementById('nav-container');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+// Открыть/закрыть по клику на бургер
+burger.onclick = () => {
+    navContainer.classList.toggle('active');
+    burger.querySelector('i').classList.toggle('fa-bars');
+    burger.querySelector('i').classList.toggle('fa-times'); // Меняем полоски на крестик
+};
+
+// Закрыть меню при клике на любую ссылку
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        navContainer.classList.remove('active');
+        burger.querySelector('i').classList.add('fa-bars');
+        burger.querySelector('i').classList.remove('fa-times');
+    });
+});
