@@ -82,7 +82,7 @@ const courseWorks = [
     { title: "Курсовая работа 1", subject: "ИТ в физике", link: "https://github.com/mugshooter/repository/tree/main/1%20SEM/Информационные%20технологии%20в%20физике/Курсовая(%201%20курс)" },
     { title: "Курсовая работа 2", subject: "Технологии комп. моделирования", link: "https://github.com/mugshooter/repository/tree/main/4%20SEM/Технологии%20компьютерного%20моделирования/Курсовая" },
     { title: "Курсовая работа 3", subject: "Пакеты прикладных программ", link: "https://github.com/mugshooter/repository/tree/main/5%20SEM/Пакеты%20прикладных%20программ/Курсовая" },
-    { title: "Курсовая работа 4", subject: "В разработке", link: "#" }
+    { title: "Курсовая работа 4", subject: "Организация электронной образовательной среды", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Организация%20электронной%20образовательной%20среды/Курсовая" }
 ];
 
 const vkr = {
