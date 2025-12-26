@@ -239,88 +239,11 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     };
 });
 
-// --- ЛОГИКА ПАСХАЛКИ ---
-
-let logoClicks = 0;
+// --- СЕКРЕТНЫЙ ФУНКЦИОНАЛ ---
 let matrixInterval = null;
-const logoNode = document.querySelector('.logo');
-logoNode.style.cursor = 'pointer';
+let logoClicks = 0;
 
-logoNode.onclick = () => {
-    logoClicks++;
-    if (logoClicks === 10) {
-        activateHackerMode();
-        showEasterEggArt();
-        logoClicks = 0;
-    }
-};
-
-function activateHackerMode() {
-    // 1. Создаем кнопку быстрого доступа, если её еще нет
-    // Создаем кнопку, если её нет
-    if (!document.getElementById('hacker-theme-btn')) {
-        const hackerBtn = document.createElement('button');
-        hackerBtn.id = 'hacker-theme-btn';
-        hackerBtn.innerHTML = '<i class="fas fa-user-secret"></i>';
-        hackerBtn.title = "Hacker Protocol";
-        
-        const themeBtn = document.getElementById('theme-toggle');
-        
-        // ВАЖНО: Вставляем кнопку в DOM
-        themeBtn.after(hackerBtn);
-
-        hackerBtn.onclick = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (document.body.classList.contains('hacker-mode')) {
-                themeBtn.click(); // Выключаем через основную логику
-            } else {
-                activateHackerMode();
-            }
-        };
-    }
-
-    // 2. Включаем сам режим
-    document.body.classList.add('hacker-mode');
-    const canvas = document.getElementById('matrix-canvas');
-    canvas.style.display = 'block';
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const fontSize = 16;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops = Array(columns).fill(1);
-
-    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*+-";
-    const commands = ["sudo", "cmd", "root", "ls", "bash", "ssh"];
-
-    function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
-            const isCommand = Math.random() > 0.96;
-            const text = isCommand 
-                ? commands[Math.floor(Math.random() * commands.length)] 
-                : chars[Math.floor(Math.random() * chars.length)];
-
-            ctx.fillStyle = isCommand ? "#fff" : "#0f0";
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-            drops[i]++;
-        }
-    }
-
-    if (matrixInterval) clearInterval(matrixInterval);
-    matrixInterval = setInterval(draw, 40);
-}
-
+// 1. Функция ASCII-арта
 function showEasterEggArt() {
     const art = `⣿⣿⣿⣿⣿⣿⣿⠿⠿⢛⣋⣙⣋⣩⣭⣭⣭⣭⣍⣉⡛⠻⢿⣿⣿⣿⣿
 ⣿⣿⣿⠟⣋⣥⣴⣾⣿⣿⣿⡆⣿⣿⣿⣿⣿⣿⡿⠟⠛⠗⢦⡙⢿⣿⣿
@@ -349,22 +272,141 @@ function showEasterEggArt() {
     document.body.appendChild(overlay);
 }
 
-const themeBtnNode = document.getElementById('theme-toggle');
-const originalThemeFunc = themeBtnNode.onclick;
-
-themeBtnNode.onclick = (e) => {
-    if (document.body.classList.contains('hacker-mode')) {
-        document.body.classList.remove('hacker-mode');
-        if (matrixInterval) {
-            clearInterval(matrixInterval);
-            matrixInterval = null;
-        }
-        const canvas = document.getElementById('matrix-canvas');
-        if (canvas) {
-            canvas.style.display = 'none';
-            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-        }
-        return;
+// 2. Очистка всех режимов
+function clearAllSpecialModes() {
+    document.body.classList.remove('hacker-mode', 'retrowave-mode');
+    if (matrixInterval) {
+        clearInterval(matrixInterval);
+        matrixInterval = null;
     }
-    if (typeof originalThemeFunc === 'function') originalThemeFunc(e);
-};
+    const canvas = document.getElementById('matrix-canvas');
+    if (canvas) {
+        canvas.style.display = 'none';
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+}
+
+// 3. Создание кнопок пульта
+function unlockEasterEggButtons() {
+    if (document.getElementById('hacker-theme-btn')) return;
+
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+
+    const hackerBtn = document.createElement('button');
+    hackerBtn.id = 'hacker-theme-btn';
+    hackerBtn.className = 'special-toggle';
+    hackerBtn.innerHTML = '<i class="fas fa-user-secret"></i>';
+
+    const retroBtn = document.createElement('button');
+    retroBtn.id = 'retro-theme-btn';
+    retroBtn.className = 'special-toggle';
+    retroBtn.innerHTML = '<i class="fas fa-sun"></i>';
+
+    themeToggle.after(retroBtn);
+    themeToggle.after(hackerBtn);
+
+    hackerBtn.addEventListener('click', () => {
+        const isActive = document.body.classList.contains('hacker-mode');
+        clearAllSpecialModes();
+        if (!isActive) activateHackerMode();
+    });
+
+    retroBtn.addEventListener('click', () => {
+        const isActive = document.body.classList.contains('retrowave-mode');
+        clearAllSpecialModes();
+        if (!isActive) document.body.classList.add('retrowave-mode');
+    });
+}
+
+// 4. Логика кликов по логотипу (через EventListener для надежности)
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.logo')) {
+        logoClicks++;
+        console.log("Logo clicks:", logoClicks); // Проверь в консоли (F12)
+        if (logoClicks >= 10) {
+            showEasterEggArt();
+            unlockEasterEggButtons();
+            logoClicks = 0;
+        }
+    }
+});
+
+// 5. Окончательно исправленная кнопка темы (БЕЗ смены иконки)
+const mainThemeBtn = document.getElementById('theme-toggle');
+if (mainThemeBtn) {
+    mainThemeBtn.addEventListener('click', () => {
+        // Если включен любой спец-режим — выключаем его
+        if (document.body.classList.contains('hacker-mode') || document.body.classList.contains('retrowave-mode')) {
+            clearAllSpecialModes();
+            // Здесь иконку не трогаем!
+        } else {
+            // Обычная смена темной/светлой темы
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // СТРОКУ С .innerHTML МЫ УДАЛИЛИ. Иконка останется такой, какая в HTML.
+        }
+    });
+}
+
+function activateHackerMode() {
+    document.body.classList.add('hacker-mode');
+    const canvas = document.getElementById('matrix-canvas');
+    if (!canvas) return;
+    
+    canvas.style.display = 'block';
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const charArray = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿ$#_>!&*@%".split("");
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    // --- ЛОГИКА СИСТЕМНЫХ СООБЩЕНИЙ ---
+    const messages = ["ACCESS GRANTED", "DECRYPTING...", "SYSTEM OVERRIDE", "CONNECTING...", "INTRUSION DETECTED", "BYPASSING FIREWALL"];
+    let currentMsg = { text: "", x: 0, y: 0, alpha: 0, active: false };
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Рисуем основной дождь
+        ctx.fillStyle = "#0f0";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = charArray[Math.floor(Math.random() * charArray.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+
+        // Рисуем системное сообщение, если оно активно
+        if (currentMsg.active) {
+            ctx.fillStyle = `rgba(0, 255, 0, ${currentMsg.alpha})`;
+            ctx.font = "bold 20px monospace";
+            ctx.fillText(currentMsg.text, currentMsg.x, currentMsg.y);
+            
+            currentMsg.alpha -= 0.01; // Плавное исчезновение
+            if (currentMsg.alpha <= 0) currentMsg.active = false;
+        } else if (Math.random() > 0.992) { // Шанс появления сообщения (~раз в несколько секунд)
+            currentMsg = {
+                text: messages[Math.floor(Math.random() * messages.length)],
+                x: Math.random() * (canvas.width - 200),
+                y: Math.random() * (canvas.height - 50) + 50,
+                alpha: 1,
+                active: true
+            };
+        }
+    }
+
+    matrixInterval = setInterval(draw, 33);
+}

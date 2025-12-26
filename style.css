@@ -59,6 +59,9 @@ body {
     text-decoration: none;
     display: flex;
     align-items: center;
+    cursor: pointer !important;
+    user-select: none;
+    pointer-events: auto !important;
 }
 .logo span { color: var(--accent); margin-left: 5px; }
 .logo i { margin-right: 8px; color: var(--accent); }
@@ -441,4 +444,100 @@ body.hacker-mode #hacker-theme-btn {
 #hacker-theme-btn:hover {
     color: #00ff00;
     transform: scale(1.1);
+}
+
+/* --- НОВЫЙ СЕКРЕТНЫЙ СТИЛЬ: RETROWAVE --- */
+
+body.retrowave-mode {
+    background-color: #2b0b3d !important;
+    /* Рисуем неоновую сетку на фоне */
+    background-image: 
+        linear-gradient(rgba(255, 0, 255, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 255, 0.2) 1px, transparent 1px) !important;
+    background-size: 40px 40px !important;
+    color: #00ffff !important;
+}
+
+/* Карточки в стиле неона */
+body.retrowave-mode .card,
+body.retrowave-mode .semester-card,
+body.retrowave-mode .subject-card,
+body.retrowave-mode .back-btn {
+    background: rgba(20, 0, 40, 0.9) !important;
+    border: 2px solid #00ffff !important;
+    box-shadow: 0 0 15px #ff00ff, inset 0 0 10px #ff00ff !important;
+    color: #fff !important;
+    transform: skewX(-1deg); /* Ретро-наклон */
+}
+
+/* Заголовки с двойной тенью */
+body.retrowave-mode h1, 
+body.retrowave-mode h2, 
+body.retrowave-mode h3,
+body.retrowave-mode .logo {
+    color: #fff !important;
+    text-shadow: 3px 3px #ff00ff, -2px -2px #00ffff !important;
+    text-transform: uppercase;
+}
+
+/* Эффект закатного солнца на фоне */
+body.retrowave-mode::after {
+    content: "";
+    position: fixed;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(#ff00ff, #ff8800);
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(60px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Иконки становятся голубыми */
+body.retrowave-mode i {
+    color: #00ffff !important;
+}
+
+/* Стили для новых секретных кнопок */
+.special-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 5px;
+    vertical-align: middle;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Подсветка активной кнопки Матрицы */
+body.hacker-mode #hacker-theme-btn {
+    color: #00ff00 !important;
+    text-shadow: 0 0 8px #00ff00;
+}
+
+/* Подсветка активной кнопки Ретровейва */
+body.retrowave-mode #retro-theme-btn {
+    color: #ff00ff !important;
+    text-shadow: 0 0 8px #ff00ff;
+}
+
+/* Наведение */
+.special-toggle:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
 }
