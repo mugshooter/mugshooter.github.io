@@ -264,7 +264,6 @@ main {
     .logo span { display: none; }
 }
 
-/* Обновленные стили для пасхалки */
 .easter-egg-overlay {
     z-index: 3000 !important;
     position: fixed;
@@ -272,7 +271,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95); /* Почти полностью черный фон */
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -281,27 +280,25 @@ main {
 }
 
 .easter-egg-content {
-    background: #000000; /* Черный фон самого блока */
+    background: #000000;
     padding: 20px;
-    border: 1px solid #00ff00; /* Зеленая рамка в стиле терминала */
+    border: 1px solid #00ff00;
     border-radius: 10px;
     white-space: pre;
     font-family: 'Courier New', monospace;
     font-size: 9px;
     line-height: 1.1;
-    color: #00ff00; /* Ярко-зеленый цвет текста */
-    box-shadow: 0 0 25px rgba(0, 255, 0, 0.5); /* Зеленое свечение */
+    color: #00ff00;
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.5);
     text-align: center;
 }
 
 @media (max-width: 600px) {
     .easter-egg-content {
-        font-size: 5px; /* Уменьшаем размер для мобильных */
+        font-size: 5px; 
         padding: 10px;
     }
 }
-
-/* --- ФИНАЛЬНЫЙ ИСПРАВЛЕННЫЙ БЛОК ХАКЕРСКОЙ ТЕМЫ --- */
 
 #matrix-canvas {
     position: fixed;
@@ -316,30 +313,41 @@ main {
 
 body.hacker-mode {
     background-color: #000 !important;
+    text-shadow: 
+        1px 1px 2px #000, 
+       -1px -1px 2px #000, 
+        1px -1px 2px #000, 
+       -1px 1px 2px #000 !important;
 }
 
 body.hacker-mode #matrix-canvas {
     display: block;
+    filter: blur(1px);
 }
 
-/* 1. ГЛАВНОЕ: Заставляем ВСЕ карточки (включая семестры и предметы) быть видимыми */
 body.hacker-mode .card,
 body.hacker-mode .semester-card,
-body.hacker-mode .subject-card,
+body.hacker-mode .subject-card{
+    background: rgba(0, 0, 0, 0.85) !important;
+    border: 1px solid #00ff00 !important;
+}
 body.hacker-mode .back-btn {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-align: center;
     position: relative !important;
-    z-index: 10 !important; /* Вытаскиваем из-под фона */
-    background: rgba(0, 15, 0, 0.95) !important; /* Плотный черный фон */
+    z-index: 10 !important;
+    background: rgba(0, 15, 0, 0.95) !important;
     border: 2px solid #00ff00 !important;
     color: #00ff00 !important;
     animation: hacker-glitch 0.3s infinite steps(2);
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) !important;
     visibility: visible !important;
     opacity: 1 !important;
-    display: block !important; /* Чтобы не схлопывались в ноль */
+    display: block !important;
 }
 
-/* 2. ТЕКСТ: Делаем весь текст внутри этих блоков зеленым */
 body.hacker-mode h1, 
 body.hacker-mode h2, 
 body.hacker-mode h3, 
@@ -348,22 +356,21 @@ body.hacker-mode .section-subtitle,
 body.hacker-mode .logo, 
 body.hacker-mode .logo span, 
 body.hacker-mode i,
-body.hacker-mode a,
+body.hacker-mode a{
+    color: #00ff00 !important;
+    text-shadow: 
+        2px 2px 0px #000, 
+        -2px -2px 0px #000, 
+        2px -2px 0px #000, 
+        -2px 2px 0px #000,
+        0 0 10px rgba(0, 255, 0, 0.5) !important; 
+}
 body.hacker-mode .subject-card span {
     color: #00ff00 !important;
     opacity: 1 !important;
     text-shadow: 0 0 5px #00ff00;
 }
 
-/* 3. Кнопка НАЗАД */
-body.hacker-mode .back-btn {
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    text-align: center;
-}
-
-/* 4. CRT Эффект (Линии) */
 body.hacker-mode::before {
     content: " ";
     display: block;
@@ -376,7 +383,6 @@ body.hacker-mode::before {
     pointer-events: none;
 }
 
-/* Анимация Glitch */
 @keyframes hacker-glitch {
     0% { transform: translate(0); }
     25% { transform: translate(-2px, 1px); }
@@ -385,7 +391,6 @@ body.hacker-mode::before {
     100% { transform: translate(0); }
 }
 
-/* Оверлей пасхалки (Протокол активирован) */
 .easter-egg-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -410,16 +415,14 @@ body.hacker-mode::before {
     color: #00ff00;
 }
 
-/* Контейнер, где лежат кнопки (находим через родителя theme-toggle) */
 .nav-container {
     display: flex !important;
-    align-items: center; /* Выравнивает всё по вертикали в одну линию */
-    flex-direction: row !important; /* Запрещает кнопкам падать друг под друга */
+    align-items: center; 
+    flex-direction: row !important;
 }
 
-/* Сама кнопка хакера */
 #hacker-theme-btn {
-    display: inline-flex !important; /* Делаем её строчно-флексовой */
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
     background: transparent;
@@ -427,14 +430,13 @@ body.hacker-mode::before {
     color: var(--text-color);
     font-size: 1.2rem;
     cursor: pointer;
-    margin-left: 15px; /* Отступ слева от кнопки темы */
+    margin-left: 15px;
     padding: 5px;
     line-height: 1;
     vertical-align: middle;
     transition: all 0.3s ease;
 }
 
-/* Режим хакера: только иконка и свечение */
 body.hacker-mode #hacker-theme-btn {
     color: #00ff00 !important;
     text-shadow: 0 0 10px #00ff00;
@@ -446,11 +448,8 @@ body.hacker-mode #hacker-theme-btn {
     transform: scale(1.1);
 }
 
-/* --- НОВЫЙ СЕКРЕТНЫЙ СТИЛЬ: RETROWAVE --- */
-
 body.retrowave-mode {
     background-color: #2b0b3d !important;
-    /* Рисуем неоновую сетку на фоне */
     background-image: 
         linear-gradient(rgba(255, 0, 255, 0.2) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 0, 255, 0.2) 1px, transparent 1px) !important;
@@ -458,7 +457,6 @@ body.retrowave-mode {
     color: #00ffff !important;
 }
 
-/* Карточки в стиле неона */
 body.retrowave-mode .card,
 body.retrowave-mode .semester-card,
 body.retrowave-mode .subject-card,
@@ -467,10 +465,9 @@ body.retrowave-mode .back-btn {
     border: 2px solid #00ffff !important;
     box-shadow: 0 0 15px #ff00ff, inset 0 0 10px #ff00ff !important;
     color: #fff !important;
-    transform: skewX(-1deg); /* Ретро-наклон */
+    transform: skewX(-1deg); 
 }
 
-/* Заголовки с двойной тенью */
 body.retrowave-mode h1, 
 body.retrowave-mode h2, 
 body.retrowave-mode h3,
@@ -480,7 +477,6 @@ body.retrowave-mode .logo {
     text-transform: uppercase;
 }
 
-/* Эффект закатного солнца на фоне */
 body.retrowave-mode::after {
     content: "";
     position: fixed;
@@ -497,12 +493,10 @@ body.retrowave-mode::after {
     pointer-events: none;
 }
 
-/* Иконки становятся голубыми */
 body.retrowave-mode i {
     color: #00ffff !important;
 }
 
-/* Стили для новых секретных кнопок */
 .special-toggle {
     background: transparent;
     border: none;
@@ -524,20 +518,27 @@ body.retrowave-mode i {
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* Подсветка активной кнопки Матрицы */
 body.hacker-mode #hacker-theme-btn {
     color: #00ff00 !important;
     text-shadow: 0 0 8px #00ff00;
 }
 
-/* Подсветка активной кнопки Ретровейва */
 body.retrowave-mode #retro-theme-btn {
     color: #ff00ff !important;
     text-shadow: 0 0 8px #ff00ff;
+    animation: icon-pulse 1.5s infinite alternate;
 }
 
-/* Наведение */
+@keyframes icon-pulse {
+    from { filter: drop-shadow(0 0 2px #ff00ff); transform: scale(1); }
+    to { filter: drop-shadow(0 0 8px #00ffff); transform: scale(1.15); }
+}
+
 .special-toggle:hover {
     transform: scale(1.2);
     filter: brightness(1.2);
+}
+
+body.retrowave-mode .card:hover {
+    box-shadow: 0 0 25px #ff00ff, 0 0 50px #00ffff !important;
 }

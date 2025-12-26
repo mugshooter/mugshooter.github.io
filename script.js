@@ -239,11 +239,9 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     };
 });
 
-// --- СЕКРЕТНЫЙ ФУНКЦИОНАЛ ---
 let matrixInterval = null;
 let logoClicks = 0;
 
-// 1. Функция ASCII-арта
 function showEasterEggArt() {
     const art = `⣿⣿⣿⣿⣿⣿⣿⠿⠿⢛⣋⣙⣋⣩⣭⣭⣭⣭⣍⣉⡛⠻⢿⣿⣿⣿⣿
 ⣿⣿⣿⠟⣋⣥⣴⣾⣿⣿⣿⡆⣿⣿⣿⣿⣿⣿⡿⠟⠛⠗⢦⡙⢿⣿⣿
@@ -272,13 +270,15 @@ function showEasterEggArt() {
     document.body.appendChild(overlay);
 }
 
-// 2. Очистка всех режимов
 function clearAllSpecialModes() {
-    document.body.classList.remove('hacker-mode', 'retrowave-mode');
+    document.body.classList.remove('hacker-mode');
+    document.body.classList.remove('retrowave-mode');
+    
     if (matrixInterval) {
         clearInterval(matrixInterval);
         matrixInterval = null;
     }
+    
     const canvas = document.getElementById('matrix-canvas');
     if (canvas) {
         canvas.style.display = 'none';
@@ -287,7 +287,6 @@ function clearAllSpecialModes() {
     }
 }
 
-// 3. Создание кнопок пульта
 function unlockEasterEggButtons() {
     if (document.getElementById('hacker-theme-btn')) return;
 
@@ -302,7 +301,7 @@ function unlockEasterEggButtons() {
     const retroBtn = document.createElement('button');
     retroBtn.id = 'retro-theme-btn';
     retroBtn.className = 'special-toggle';
-    retroBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    retroBtn.innerHTML = '<i class="fas fa-meteor"></i>';
 
     themeToggle.after(retroBtn);
     themeToggle.after(hackerBtn);
@@ -320,11 +319,10 @@ function unlockEasterEggButtons() {
     });
 }
 
-// 4. Логика кликов по логотипу (через EventListener для надежности)
 document.addEventListener('click', (e) => {
     if (e.target.closest('.logo')) {
         logoClicks++;
-        console.log("Logo clicks:", logoClicks); // Проверь в консоли (F12)
+        console.log("Logo clicks:", logoClicks);
         if (logoClicks >= 10) {
             showEasterEggArt();
             unlockEasterEggButtons();
@@ -333,24 +331,24 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// 5. Окончательно исправленная кнопка темы (БЕЗ смены иконки)
 const mainThemeBtn = document.getElementById('theme-toggle');
+
 if (mainThemeBtn) {
     mainThemeBtn.addEventListener('click', () => {
-        // Если включен любой спец-режим — выключаем его
-        if (document.body.classList.contains('hacker-mode') || document.body.classList.contains('retrowave-mode')) {
+        const isHacker = document.body.classList.contains('hacker-mode');
+        const isRetro = document.body.classList.contains('retrowave-mode');
+
+        if (isHacker || isRetro) {
             clearAllSpecialModes();
-            // Здесь иконку не трогаем!
-        } else {
-            // Обычная смена темной/светлой темы
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            // СТРОКУ С .innerHTML МЫ УДАЛИЛИ. Иконка останется такой, какая в HTML.
         }
+
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        mainThemeBtn.innerHTML = newTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
     });
 }
 
@@ -370,7 +368,6 @@ function activateHackerMode() {
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
 
-    // --- ЛОГИКА СИСТЕМНЫХ СООБЩЕНИЙ ---
     const messages = ["ACCESS GRANTED", "DECRYPTING...", "SYSTEM OVERRIDE", "CONNECTING...", "INTRUSION DETECTED", "BYPASSING FIREWALL"];
     let currentMsg = { text: "", x: 0, y: 0, alpha: 0, active: false };
 
@@ -378,7 +375,6 @@ function activateHackerMode() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Рисуем основной дождь
         ctx.fillStyle = "#0f0";
         ctx.font = fontSize + "px monospace";
 
@@ -389,15 +385,14 @@ function activateHackerMode() {
             drops[i]++;
         }
 
-        // Рисуем системное сообщение, если оно активно
         if (currentMsg.active) {
             ctx.fillStyle = `rgba(0, 255, 0, ${currentMsg.alpha})`;
             ctx.font = "bold 20px monospace";
             ctx.fillText(currentMsg.text, currentMsg.x, currentMsg.y);
             
-            currentMsg.alpha -= 0.01; // Плавное исчезновение
+            currentMsg.alpha -= 0.01;
             if (currentMsg.alpha <= 0) currentMsg.active = false;
-        } else if (Math.random() > 0.992) { // Шанс появления сообщения (~раз в несколько секунд)
+        } else if (Math.random() > 0.992) { 
             currentMsg = {
                 text: messages[Math.floor(Math.random() * messages.length)],
                 x: Math.random() * (canvas.width - 200),
