@@ -239,21 +239,89 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     };
 });
 
+// --- ЛОГИКА ПАСХАЛКИ ---
+
 let logoClicks = 0;
-const logo = document.querySelector('.logo');
+let matrixInterval = null;
+const logoNode = document.querySelector('.logo');
+logoNode.style.cursor = 'pointer';
 
-logo.style.cursor = 'pointer'; // Делаем логотип кликабельным визуально
-
-logo.onclick = () => {
+logoNode.onclick = () => {
     logoClicks++;
-    
     if (logoClicks === 10) {
-        showEasterEgg();
-        logoClicks = 0; // Сбрасываем счетчик
+        activateHackerMode();
+        showEasterEggArt();
+        logoClicks = 0;
     }
 };
 
-function showEasterEgg() {
+function activateHackerMode() {
+    // 1. Создаем кнопку быстрого доступа, если её еще нет
+    // Создаем кнопку, если её нет
+    if (!document.getElementById('hacker-theme-btn')) {
+        const hackerBtn = document.createElement('button');
+        hackerBtn.id = 'hacker-theme-btn';
+        hackerBtn.innerHTML = '<i class="fas fa-user-secret"></i>';
+        hackerBtn.title = "Hacker Protocol";
+        
+        const themeBtn = document.getElementById('theme-toggle');
+        
+        // ВАЖНО: Вставляем кнопку в DOM
+        themeBtn.after(hackerBtn);
+
+        hackerBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (document.body.classList.contains('hacker-mode')) {
+                themeBtn.click(); // Выключаем через основную логику
+            } else {
+                activateHackerMode();
+            }
+        };
+    }
+
+    // 2. Включаем сам режим
+    document.body.classList.add('hacker-mode');
+    const canvas = document.getElementById('matrix-canvas');
+    canvas.style.display = 'block';
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*+-";
+    const commands = ["sudo", "cmd", "root", "ls", "bash", "ssh"];
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const isCommand = Math.random() > 0.96;
+            const text = isCommand 
+                ? commands[Math.floor(Math.random() * commands.length)] 
+                : chars[Math.floor(Math.random() * chars.length)];
+
+            ctx.fillStyle = isCommand ? "#fff" : "#0f0";
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    if (matrixInterval) clearInterval(matrixInterval);
+    matrixInterval = setInterval(draw, 40);
+}
+
+function showEasterEggArt() {
     const art = `⣿⣿⣿⣿⣿⣿⣿⠿⠿⢛⣋⣙⣋⣩⣭⣭⣭⣭⣍⣉⡛⠻⢿⣿⣿⣿⣿
 ⣿⣿⣿⠟⣋⣥⣴⣾⣿⣿⣿⡆⣿⣿⣿⣿⣿⣿⡿⠟⠛⠗⢦⡙⢿⣿⣿
 ⣿⡟⡡⠾⠛⠻⢿⣿⣿⣿⡿⠃⣿⡿⣿⠿⠛⠉⠠⠴⢶⡜⣦⡀⡈⢿⣿
@@ -272,10 +340,31 @@ function showEasterEgg() {
 
     const overlay = document.createElement('div');
     overlay.className = 'easter-egg-overlay';
-    overlay.innerHTML = `<div class="easter-egg-content">${art}</div>`;
-    
-    // Удаление по клику в любом месте
+    overlay.innerHTML = `
+        <div class="easter-egg-content">
+            <div class="protocol-title">PROTOCOL ACTIVATED</div>
+            <div class="ascii-art">${art}</div>
+        </div>`;
     overlay.onclick = () => overlay.remove();
-    
     document.body.appendChild(overlay);
 }
+
+const themeBtnNode = document.getElementById('theme-toggle');
+const originalThemeFunc = themeBtnNode.onclick;
+
+themeBtnNode.onclick = (e) => {
+    if (document.body.classList.contains('hacker-mode')) {
+        document.body.classList.remove('hacker-mode');
+        if (matrixInterval) {
+            clearInterval(matrixInterval);
+            matrixInterval = null;
+        }
+        const canvas = document.getElementById('matrix-canvas');
+        if (canvas) {
+            canvas.style.display = 'none';
+            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        }
+        return;
+    }
+    if (typeof originalThemeFunc === 'function') originalThemeFunc(e);
+};

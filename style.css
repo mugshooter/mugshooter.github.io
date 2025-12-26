@@ -263,6 +263,7 @@ main {
 
 /* Обновленные стили для пасхалки */
 .easter-egg-overlay {
+    z-index: 3000 !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -295,4 +296,149 @@ main {
         font-size: 5px; /* Уменьшаем размер для мобильных */
         padding: 10px;
     }
+}
+
+/* --- ФИНАЛЬНЫЙ ИСПРАВЛЕННЫЙ БЛОК ХАКЕРСКОЙ ТЕМЫ --- */
+
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    display: none;
+    pointer-events: none;
+}
+
+body.hacker-mode {
+    background-color: #000 !important;
+}
+
+body.hacker-mode #matrix-canvas {
+    display: block;
+}
+
+/* 1. ГЛАВНОЕ: Заставляем ВСЕ карточки (включая семестры и предметы) быть видимыми */
+body.hacker-mode .card,
+body.hacker-mode .semester-card,
+body.hacker-mode .subject-card,
+body.hacker-mode .back-btn {
+    position: relative !important;
+    z-index: 10 !important; /* Вытаскиваем из-под фона */
+    background: rgba(0, 15, 0, 0.95) !important; /* Плотный черный фон */
+    border: 2px solid #00ff00 !important;
+    color: #00ff00 !important;
+    animation: hacker-glitch 0.3s infinite steps(2);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important; /* Чтобы не схлопывались в ноль */
+}
+
+/* 2. ТЕКСТ: Делаем весь текст внутри этих блоков зеленым */
+body.hacker-mode h1, 
+body.hacker-mode h2, 
+body.hacker-mode h3, 
+body.hacker-mode p, 
+body.hacker-mode .section-subtitle,
+body.hacker-mode .logo, 
+body.hacker-mode .logo span, 
+body.hacker-mode i,
+body.hacker-mode a,
+body.hacker-mode .subject-card span {
+    color: #00ff00 !important;
+    opacity: 1 !important;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+/* 3. Кнопка НАЗАД */
+body.hacker-mode .back-btn {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* 4. CRT Эффект (Линии) */
+body.hacker-mode::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    z-index: 100;
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+}
+
+/* Анимация Glitch */
+@keyframes hacker-glitch {
+    0% { transform: translate(0); }
+    25% { transform: translate(-2px, 1px); }
+    50% { transform: translate(2px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+    100% { transform: translate(0); }
+}
+
+/* Оверлей пасхалки (Протокол активирован) */
+.easter-egg-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; cursor: pointer;
+}
+
+.protocol-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #00ff00;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.ascii-art {
+    white-space: pre;
+    font-size: 8px;
+    line-height: 1.1;
+    color: #00ff00;
+}
+
+/* Контейнер, где лежат кнопки (находим через родителя theme-toggle) */
+.nav-container {
+    display: flex !important;
+    align-items: center; /* Выравнивает всё по вертикали в одну линию */
+    flex-direction: row !important; /* Запрещает кнопкам падать друг под друга */
+}
+
+/* Сама кнопка хакера */
+#hacker-theme-btn {
+    display: inline-flex !important; /* Делаем её строчно-флексовой */
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 15px; /* Отступ слева от кнопки темы */
+    padding: 5px;
+    line-height: 1;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+/* Режим хакера: только иконка и свечение */
+body.hacker-mode #hacker-theme-btn {
+    color: #00ff00 !important;
+    text-shadow: 0 0 10px #00ff00;
+    animation: hacker-glitch 0.3s infinite steps(2);
+}
+
+#hacker-theme-btn:hover {
+    color: #00ff00;
+    transform: scale(1.1);
 }
