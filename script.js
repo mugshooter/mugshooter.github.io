@@ -74,7 +74,7 @@ const internships = [
     { title: "Учебная (эксплуатационная)", link: "https://github.com/mugshooter/repository/tree/main/Практика%201%20курс" },
     { title: "Учебная (технологическая)", link: "https://github.com/mugshooter/repository/tree/main/Практика%202%20курс" },
     { title: "Производственная (технологическая)", link: "https://github.com/mugshooter/repository/tree/main/Практика%203%20курс" },
-    { title: "Производственная (НИР)", link: "#" },
+    { title: "Производственная (НИР)", link: "https://github.com/mugshooter/repository/tree/main/Практика%204%20курс" },
     { title: "Производственная (преддипломная)", link: "#" }
 ];
 
