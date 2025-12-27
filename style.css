@@ -333,25 +333,34 @@ body.hacker-mode #matrix-canvas {
 
 body.hacker-mode .card,
 body.hacker-mode .semester-card,
-body.hacker-mode .subject-card{
-    background: rgba(0, 0, 0, 0.85) !important;
-    border: 1px solid #00ff00 !important;
-}
+body.hacker-mode .subject-card,
 body.hacker-mode .btn-back {
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    text-align: center;
     position: relative !important;
     z-index: 10 !important;
-    background: rgba(0, 15, 0, 0.95) !important;
+    background: rgba(0, 10, 0, 0.95) !important;
     border: 2px solid #00ff00 !important;
     color: #00ff00 !important;
     animation: hacker-glitch 0.3s infinite steps(2);
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) !important;
-    visibility: visible !important;
     opacity: 1 !important;
-    display: block !important;
+    visibility: visible !important;
+}
+
+
+body.hacker-mode .btn-back {
+    display: inline-flex !important;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+}
+
+body.hacker-mode .semester-card,
+body.hacker-mode .subject-card {
+    padding: 20px; 
+    margin: 10px 0;
 }
 
 body.hacker-mode h1, 
@@ -391,9 +400,8 @@ body.hacker-mode::before {
 
 @keyframes hacker-glitch {
     0% { transform: translate(0); }
-    25% { transform: translate(-2px, 1px); }
-    50% { transform: translate(2px, -1px); }
-    75% { transform: translate(-1px, -1px); }
+    33% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+    66% { transform: translate(2px, -1px); }
     100% { transform: translate(0); }
 }
 

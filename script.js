@@ -319,13 +319,15 @@ function unlockEasterEggButtons() {
     });
 }
 
+unlockEasterEggButtons();
+
+
 document.addEventListener('click', (e) => {
     if (e.target.closest('.logo')) {
         logoClicks++;
         console.log("Logo clicks:", logoClicks);
-        if (logoClicks >= 10) {
-            showEasterEggArt();
-            unlockEasterEggButtons();
+        if (logoClicks >= 5) {
+            showEasterEggArt(); 
             logoClicks = 0;
         }
     }
