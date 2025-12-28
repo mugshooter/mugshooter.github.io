@@ -61,9 +61,10 @@ const semesters = [
         {name: "Английский язык", link: "https://github.com/mugshooter/repository/tree/main/6%20SEM/Английский%206%20SEM"}
     ]},
     { id: 7, title: "7 Семестр", subjects: [
-        {name: "Программирование", link: "#"},
+        {name: "Программирование", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Программирование%207%20SEM"},
         {name: "Управление прогр. проектами", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Управление%20программными%20проектами"},
-        {name: "Английский язык", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Английский%207%20SEM"}
+        {name: "Английский язык", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Английский%207%20SEM"},
+        {name: "Организация электронной образовательной среды", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Организация%20электронной%20образовательной%20среды"}
     ]},
     { id: 8, title: "8 Семестр", subjects: [
         {name: "Дипломное проектирование", link: "#"}
