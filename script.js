@@ -234,15 +234,26 @@ window.addEventListener('popstate', (event) => {
     navigate(page, false, sem);
 });
 
-document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
-    link.onclick = (e) => { e.preventDefault(); navigate(e.target.dataset.page); };
-});
-
 const themeBtn = document.getElementById('theme-toggle');
-themeBtn.onclick = () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-};
+
+if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+        const isHacker = document.body.classList.contains('hacker-mode');
+        const isRetro = document.body.classList.contains('retrowave-mode');
+
+        if (isHacker || isRetro) {
+            clearAllSpecialModes();
+        }
+
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        themeBtn.innerHTML = newTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+    });
+}
 
 const urlParams = new URLSearchParams(window.location.search);
 const initialPage = urlParams.get('page') || 'home';
@@ -351,7 +362,6 @@ function unlockEasterEggButtons() {
 
 unlockEasterEggButtons();
 
-
 document.addEventListener('click', (e) => {
     if (e.target.closest('.logo')) {
         logoClicks++;
@@ -363,27 +373,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-const mainThemeBtn = document.getElementById('theme-toggle');
-
-if (mainThemeBtn) {
-    mainThemeBtn.addEventListener('click', () => {
-        const isHacker = document.body.classList.contains('hacker-mode');
-        const isRetro = document.body.classList.contains('retrowave-mode');
-
-        if (isHacker || isRetro) {
-            clearAllSpecialModes();
-        }
-
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        mainThemeBtn.innerHTML = newTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-    });
-}
-
+// Активация режима хакера
 function activateHackerMode() {
     document.body.classList.add('hacker-mode');
     const canvas = document.getElementById('matrix-canvas');
