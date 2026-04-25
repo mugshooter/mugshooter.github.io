@@ -1,3 +1,4 @@
+/* ==================== Переменные ==================== */
 :root {
     --bg-color: #f8fafc;
     --text-color: #1e293b;
@@ -6,6 +7,12 @@
     --primary: #2563eb;
     --accent: #3b82f6;
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    
+    /* Навыки */
+    --skills-bg: rgba(15, 23, 42, 0.9);
+    --skills-border: rgba(255, 255, 255, 0.1);
+    --skills-text: #f1f5f9;
+    --skills-strong: #fff;
 }
 
 [data-theme="dark"] {
@@ -14,11 +21,30 @@
     --card-bg: #1e293b;
     --navbar-bg: rgba(2, 6, 23, 0.85);
     --card-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+    
+    /* Навыки (dark) */
+    --skills-bg: rgba(59, 130, 246, 0.1);
+    --skills-border: rgba(255, 255, 255, 0.2);
+    --skills-text: #cbd5e1;
+    --skills-strong: #fff;
 }
 
-* { 
-    box-sizing: border-box; 
+body.hacker-mode {
+    --skills-bg: rgba(0, 20, 0, 0.9);
+    --skills-border: #00ff00;
+    --skills-text: #00ff00;
+    --skills-strong: #00ff00;
 }
+
+body.retrowave-mode {
+    --skills-bg: rgba(20, 0, 40, 0.9);
+    --skills-border: #ff00ff;
+    --skills-text: #fff;
+    --skills-strong: #00ffff;
+}
+
+/* ==================== Базовые стили ==================== */
+* { box-sizing: border-box; }
 
 html, body {
     max-width: 100%;
@@ -37,6 +63,7 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+/* ==================== Навигация ==================== */
 .navbar {
     display: flex;
     justify-content: space-around;
@@ -63,6 +90,7 @@ body {
     user-select: none;
     pointer-events: auto !important;
 }
+
 .logo span { color: var(--accent); margin-left: 5px; }
 .logo i { margin-right: 8px; color: var(--accent); }
 
@@ -83,9 +111,7 @@ body {
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
-    color: white;
-}
+.nav-links a:hover { color: white; }
 
 #theme-toggle {
     background: transparent;
@@ -97,6 +123,7 @@ body {
     font-size: 1.1rem;
     transition: transform 0.2s ease;
 }
+
 #theme-toggle:active { transform: scale(0.9); }
 
 .burger {
@@ -106,25 +133,28 @@ body {
     color: white;
 }
 
-main { 
-    flex: 1; 
-    max-width: 1200px; 
-    margin: 0 auto; 
-    padding: 40px 20px; 
-    width: 100%; 
+/* ==================== Основной контент ==================== */
+main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    width: 100%;
 }
 
 .hero { text-align: center; padding: 40px 10px; }
-.hero h1 { 
-    font-size: clamp(2rem, 7vw, 3.5rem); 
-    margin: 0; 
-    color: var(--primary); 
+
+.hero h1 {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    margin: 0;
+    color: var(--primary);
     transition: color 0.4s ease;
 }
-.hero h3 { 
-    font-size: 1.4rem; 
-    margin: 10px 0; 
-    opacity: 0.9; 
+
+.hero h3 {
+    font-size: 1.4rem;
+    margin: 10px 0;
+    opacity: 0.9;
     transition: color 0.4s ease;
 }
 
@@ -142,14 +172,15 @@ main {
     100% { transform: translate(0, 0); }
 }
 
-.section-subtitle { 
-    margin: 50px 0 25px; 
-    padding-left: 15px; 
+.section-subtitle {
+    margin: 50px 0 25px;
+    padding-left: 15px;
     border-left: 5px solid var(--primary);
     font-size: 1.5rem;
     transition: border-color 0.4s ease, color 0.4s ease;
 }
 
+/* ==================== Сетка и карточки ==================== */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -166,41 +197,39 @@ main {
     border: 1px solid rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center; 
     min-height: 150px;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.5s forwards;
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.2s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    text-align: center; 
 }
 
-.card i { 
-    font-size: 2rem; 
-    margin-bottom: 15px; 
-    color: var(--primary); 
+.card i {
+    font-size: 2rem;
+    margin-bottom: 10px; 
+    color: var(--primary);
     transition: color 0.4s ease;
+    display: block; 
 }
 
-.card h3 { 
-    margin: 0; 
-    color: var(--primary); 
-    font-size: 1.2rem; 
-    transition: color 0.4s ease;
+.card h3, .card p {
+    text-align: center; 
 }
 
-.card p {
-    margin: 10px 0 0;
-    transition: color 0.4s ease;
-}
+.card p { margin: 10px 0 0; transition: color 0.4s ease; }
 
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
 .card:hover { transform: translateY(-8px); border-color: var(--primary); }
 
+/* ==================== Кнопка "Назад" ==================== */
 .btn-back {
-    background: transparent; 
-    color: var(--text-color); 
-    border: 2px solid var(--text-color); 
+    background: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--text-color);
     padding: 10px 24px;
     border-radius: 8px;
     cursor: pointer;
@@ -213,15 +242,30 @@ main {
 }
 
 .btn-back:hover {
-    background: var(--text-color); 
-    color: var(--bg-color); 
+    background: var(--text-color);
+    color: var(--bg-color);
     transform: translateX(-5px);
 }
+
 .btn-back:active { transform: scale(0.95); }
 
+/* ==================== Контакты ==================== */
+.contacts-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+}
+
+.center-column {
+    flex: 0 1 800px;
+    display: flex;
+    flex-direction: column;
+}
 
 .side-video {
-    flex: 0 0 200px; 
+    flex: 0 0 200px;
     max-width: 200px;
 }
 
@@ -231,25 +275,15 @@ main {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.contacts-wrapper .grid {
-    flex: 1;
-    max-width: 500px; 
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+.contacts-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
 }
 
-@media (max-width: 900px) {
-    .side-video {
-        display: none; 
-    }
-    
-    .contacts-wrapper .grid {
-        width: 100%;
-        max-width: 100%;
-    }
-}
-
+/* ==================== Секция навыков ==================== */
 .skills-section {
-    margin-top: 0; 
+    margin-top: 0;
     padding: 35px;
     border-radius: 20px;
     text-align: center;
@@ -258,40 +292,7 @@ main {
     margin-right: auto;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
-    transition: all 0.4s ease; 
-}
-
-
-body {
-    --skills-bg: rgba(15, 23, 42, 0.9); 
-    --skills-border: rgba(255, 255, 255, 0.1);
-    --skills-text: #f1f5f9; 
-    --skills-strong: #fff; 
-}
-
-[data-theme="dark"] body {
-    --skills-bg: rgba(59, 130, 246, 0.1); 
-    --skills-border: rgba(255, 255, 255, 0.2);
-    --skills-text: #cbd5e1; 
-    --skills-strong: #fff; 
-}
-
-body.hacker-mode {
-    --skills-bg: rgba(0, 20, 0, 0.9); 
-    --skills-border: #00ff00;
-    --skills-text: #00ff00;
-    --skills-strong: #00ff00; 
-}
-
-body.retrowave-mode {
-    --skills-bg: rgba(20, 0, 40, 0.9); 
-    --skills-border: #ff00ff;
-    --skills-text: #fff;
-    --skills-strong: #00ffff; 
-}
-
-
-.skills-section {
+    transition: all 0.4s ease;
     background: var(--skills-bg);
     border: 1px solid var(--skills-border);
     color: var(--skills-text);
@@ -300,15 +301,12 @@ body.retrowave-mode {
 .skills-section h3 {
     margin-bottom: 25px;
     font-size: 1.6rem;
-    color: #3b82f6; 
+    color: #3b82f6;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-.skills-section strong {
-    color: var(--skills-strong);
-    font-weight: 700;
-}
+.skills-section strong { color: var(--skills-strong); font-weight: 700; }
 
 .skills-section p {
     margin: 12px 0;
@@ -316,113 +314,30 @@ body.retrowave-mode {
     font-size: 1.05rem;
 }
 
-@media (max-width: 768px) {
-    .skills-section {
-        margin: 30px 15px;
-        padding: 25px;
-        backdrop-filter: blur(5px);
-    }
-}
-
-.contacts-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Видео будут прижаты к верху */
-    gap: 20px;
-    width: 100%;
-}
-
-.center-column {
-    flex: 0 1 800px; /* Ограничиваем ширину, чтобы не растягивалось */
-    display: flex;
-    flex-direction: column;
-}
-
-/* На мобилках скрываем видео или перестраиваем */
-@media (max-width: 900px) {
-    .contacts-wrapper {
-        flex-direction: column;
-        align-items: center;
-    }
-    .side-video {
-        display: none; /* Или можно оставить, если хочешь видео на фоне */
-    }
-}
-
-/* Специальная сетка для контактов */
-.contacts-grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(4, 1fr); /* Всегда 4 колонки */
-}
-
-/* Адаптивность для планшетов */
-@media (max-width: 900px) {
-    .contacts-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2x2 на средних экранах */
-    }
-}
-
-/* Адаптивность для мобильных */
-@media (max-width: 600px) {
-    .contacts-grid {
-        grid-template-columns: 1fr; /* 4x1 (столбцом) на телефонах */
-    }
-}
-
-.footer { 
-    text-align: center; 
-    padding: 30px; 
-    background: rgba(0,0,0,0.03); 
-    font-size: 0.9rem; 
-    margin-top: 40px; 
+/* ==================== Футер ==================== */
+.footer {
+    text-align: center;
+    padding: 30px;
+    background: rgba(0,0,0,0.03);
+    font-size: 0.9rem;
+    margin-top: 40px;
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-@media (max-width: 768px) {
-    .navbar {
-        justify-content: space-between;
-        padding: 0.8rem 1.5rem;
-    }
-
-    .burger { display: block; z-index: 1001; }
-
-    .nav-container {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 75%;
-        height: 100vh;
-        background: var(--navbar-bg);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: right 0.4s ease-in-out, background-color 0.4s ease;
-        z-index: 1000;
-        box-shadow: -10px 0 20px rgba(0,0,0,0.2);
-    }
-
-    .nav-container.active { right: 0; }
-
-    .nav-links { flex-direction: column; gap: 35px; }
-
-    .nav-links a {
-        font-size: 1.4rem;
-        color: white; 
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    #theme-toggle { margin-top: 20px; font-size: 1.4rem; }
-
-    .logo span { display: none; }
+/* ==================== Canvas для Matrix ==================== */
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    display: none;
+    pointer-events: none;
 }
 
+/* ==================== Easter Egg ==================== */
 .easter-egg-overlay {
-    z-index: 3000 !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -432,7 +347,7 @@ body.retrowave-mode {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 9999;
     cursor: pointer;
 }
 
@@ -450,31 +365,79 @@ body.retrowave-mode {
     text-align: center;
 }
 
-@media (max-width: 600px) {
-    .easter-egg-content {
-        font-size: 5px; 
-        padding: 10px;
-    }
+.protocol-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #00ff00;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
 }
 
-#matrix-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; 
-    display: none;
-    pointer-events: none;
+.ascii-art {
+    white-space: pre;
+    font-size: 8px;
+    line-height: 1.1;
+    color: #00ff00;
 }
 
+/* ==================== Специальные кнопки тем ==================== */
+.special-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 5px;
+    vertical-align: middle;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.special-toggle:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+}
+
+#hacker-theme-btn,
+#retro-theme-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 5px;
+    line-height: 1;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+#hacker-theme-btn:hover {
+    color: #00ff00;
+    transform: scale(1.1);
+}
+
+/* ==================== Hacker Mode ==================== */
 body.hacker-mode {
     background-color: #000 !important;
-    text-shadow: 
-        1px 1px 2px #000, 
-       -1px -1px 2px #000, 
-        1px -1px 2px #000, 
-       -1px 1px 2px #000 !important;
+    text-shadow:
+        1px 1px 2px #000,
+        -1px -1px 2px #000,
+        1px -1px 2px #000,
+        -1px 1px 2px #000 !important;
 }
 
 body.hacker-mode #matrix-canvas {
@@ -497,7 +460,6 @@ body.hacker-mode .btn-back {
     visibility: visible !important;
 }
 
-
 body.hacker-mode .btn-back {
     display: inline-flex !important;
     padding: 10px 20px;
@@ -510,27 +472,28 @@ body.hacker-mode .btn-back {
 
 body.hacker-mode .semester-card,
 body.hacker-mode .subject-card {
-    padding: 20px; 
+    padding: 20px;
     margin: 10px 0;
 }
 
-body.hacker-mode h1, 
-body.hacker-mode h2, 
-body.hacker-mode h3, 
-body.hacker-mode p, 
+body.hacker-mode h1,
+body.hacker-mode h2,
+body.hacker-mode h3,
+body.hacker-mode p,
 body.hacker-mode .section-subtitle,
-body.hacker-mode .logo, 
-body.hacker-mode .logo span, 
+body.hacker-mode .logo,
+body.hacker-mode .logo span,
 body.hacker-mode i,
-body.hacker-mode a{
+body.hacker-mode a {
     color: #00ff00 !important;
-    text-shadow: 
-        2px 2px 0px #000, 
-        -2px -2px 0px #000, 
-        2px -2px 0px #000, 
+    text-shadow:
+        2px 2px 0px #000,
+        -2px -2px 0px #000,
+        2px -2px 0px #000,
         -2px 2px 0px #000,
-        0 0 10px rgba(0, 255, 0, 0.5) !important; 
+        0 0 10px rgba(0, 255, 0, 0.5) !important;
 }
+
 body.hacker-mode .subject-card span {
     color: #00ff00 !important;
     opacity: 1 !important;
@@ -542,11 +505,17 @@ body.hacker-mode::before {
     display: block;
     position: fixed;
     top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
                 linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
     z-index: 100;
     background-size: 100% 4px, 3px 100%;
     pointer-events: none;
+}
+
+body.hacker-mode #hacker-theme-btn {
+    color: #00ff00 !important;
+    text-shadow: 0 0 8px #00ff00;
+    animation: hacker-glitch 0.3s infinite steps(2);
 }
 
 @keyframes hacker-glitch {
@@ -556,66 +525,10 @@ body.hacker-mode::before {
     100% { transform: translate(0); }
 }
 
-.easter-egg-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999; cursor: pointer;
-}
-
-.protocol-title {
-    font-size: 24px;
-    font-weight: 900;
-    color: #00ff00;
-    margin-bottom: 20px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-}
-
-.ascii-art {
-    white-space: pre;
-    font-size: 8px;
-    line-height: 1.1;
-    color: #00ff00;
-}
-
-.nav-container {
-    display: flex !important;
-    align-items: center; 
-    flex-direction: row !important;
-}
-
-#hacker-theme-btn {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-left: 15px;
-    padding: 5px;
-    line-height: 1;
-    vertical-align: middle;
-    transition: all 0.3s ease;
-}
-
-body.hacker-mode #hacker-theme-btn {
-    color: #00ff00 !important;
-    text-shadow: 0 0 10px #00ff00;
-    animation: hacker-glitch 0.3s infinite steps(2);
-}
-
-#hacker-theme-btn:hover {
-    color: #00ff00;
-    transform: scale(1.1);
-}
-
+/* ==================== Retrowave Mode ==================== */
 body.retrowave-mode {
     background-color: #2b0b3d !important;
-    background-image: 
+    background-image:
         linear-gradient(rgba(255, 0, 255, 0.2) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 0, 255, 0.2) 1px, transparent 1px) !important;
     background-size: 40px 40px !important;
@@ -630,11 +543,11 @@ body.retrowave-mode .btn-back {
     border: 2px solid #00ffff !important;
     box-shadow: 0 0 15px #ff00ff, inset 0 0 10px #ff00ff !important;
     color: #fff !important;
-    transform: skewX(-1deg); 
+    transform: skewX(-1deg);
 }
 
-body.retrowave-mode h1, 
-body.retrowave-mode h2, 
+body.retrowave-mode h1,
+body.retrowave-mode h2,
 body.retrowave-mode h3,
 body.retrowave-mode .logo {
     color: #fff !important;
@@ -658,34 +571,10 @@ body.retrowave-mode::after {
     pointer-events: none;
 }
 
-body.retrowave-mode i {
-    color: #00ffff !important;
-}
+body.retrowave-mode i { color: #00ffff !important; }
 
-.special-toggle {
-    background: transparent;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-left: 15px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    padding: 5px;
-    vertical-align: middle;
-    animation: slideIn 0.5s ease-out;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(10px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-body.hacker-mode #hacker-theme-btn {
-    color: #00ff00 !important;
-    text-shadow: 0 0 8px #00ff00;
+body.retrowave-mode .card:hover {
+    box-shadow: 0 0 25px #ff00ff, 0 0 50px #00ffff !important;
 }
 
 body.retrowave-mode #retro-theme-btn {
@@ -699,11 +588,58 @@ body.retrowave-mode #retro-theme-btn {
     to { filter: drop-shadow(0 0 8px #00ffff); transform: scale(1.15); }
 }
 
-.special-toggle:hover {
-    transform: scale(1.2);
-    filter: brightness(1.2);
+/* ==================== Медиа-запросы ==================== */
+@media (max-width: 900px) {
+    .side-video { display: none; }
+    .contacts-wrapper .grid { width: 100%; max-width: 100%; }
+    .contacts-wrapper { flex-direction: column; align-items: center; }
+    .contacts-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-body.retrowave-mode .card:hover {
-    box-shadow: 0 0 25px #ff00ff, 0 0 50px #00ffff !important;
+@media (max-width: 768px) {
+    .navbar {
+        justify-content: space-between;
+        padding: 0.8rem 1.5rem;
+    }
+    .burger { display: block; z-index: 1001; }
+    .nav-container {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        height: 100vh;
+        background: var(--navbar-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.4s ease-in-out, background-color 0.4s ease;
+        z-index: 1000;
+        box-shadow: -10px 0 20px rgba(0,0,0,0.2);
+    }
+    .nav-container.active { right: 0; }
+    .nav-links { flex-direction: column; gap: 35px; }
+    .nav-links a {
+        font-size: 1.4rem;
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    #theme-toggle { margin-top: 20px; font-size: 1.4rem; }
+    .logo span { display: none; }
+    .skills-section {
+        margin: 30px 15px;
+        padding: 25px;
+        backdrop-filter: blur(5px);
+    }
+}
+
+@media (max-width: 600px) {
+    .contacts-grid { grid-template-columns: 1fr; }
+    .easter-egg-content {
+        font-size: 5px;
+        padding: 10px;
+    }
 }
