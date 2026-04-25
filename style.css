@@ -219,6 +219,157 @@ main {
 }
 .btn-back:active { transform: scale(0.95); }
 
+
+.side-video {
+    flex: 0 0 200px; 
+    max-width: 200px;
+}
+
+.puppy-video {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.contacts-wrapper .grid {
+    flex: 1;
+    max-width: 500px; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+@media (max-width: 900px) {
+    .side-video {
+        display: none; 
+    }
+    
+    .contacts-wrapper .grid {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.skills-section {
+    margin-top: 0; 
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease; 
+}
+
+
+body {
+    --skills-bg: rgba(15, 23, 42, 0.9); 
+    --skills-border: rgba(255, 255, 255, 0.1);
+    --skills-text: #f1f5f9; 
+    --skills-strong: #fff; 
+}
+
+[data-theme="dark"] body {
+    --skills-bg: rgba(59, 130, 246, 0.1); 
+    --skills-border: rgba(255, 255, 255, 0.2);
+    --skills-text: #cbd5e1; 
+    --skills-strong: #fff; 
+}
+
+body.hacker-mode {
+    --skills-bg: rgba(0, 20, 0, 0.9); 
+    --skills-border: #00ff00;
+    --skills-text: #00ff00;
+    --skills-strong: #00ff00; 
+}
+
+body.retrowave-mode {
+    --skills-bg: rgba(20, 0, 40, 0.9); 
+    --skills-border: #ff00ff;
+    --skills-text: #fff;
+    --skills-strong: #00ffff; 
+}
+
+
+.skills-section {
+    background: var(--skills-bg);
+    border: 1px solid var(--skills-border);
+    color: var(--skills-text);
+}
+
+.skills-section h3 {
+    margin-bottom: 25px;
+    font-size: 1.6rem;
+    color: #3b82f6; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.skills-section strong {
+    color: var(--skills-strong);
+    font-weight: 700;
+}
+
+.skills-section p {
+    margin: 12px 0;
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+@media (max-width: 768px) {
+    .skills-section {
+        margin: 30px 15px;
+        padding: 25px;
+        backdrop-filter: blur(5px);
+    }
+}
+
+.contacts-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Видео будут прижаты к верху */
+    gap: 20px;
+    width: 100%;
+}
+
+.center-column {
+    flex: 0 1 800px; /* Ограничиваем ширину, чтобы не растягивалось */
+    display: flex;
+    flex-direction: column;
+}
+
+/* На мобилках скрываем видео или перестраиваем */
+@media (max-width: 900px) {
+    .contacts-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .side-video {
+        display: none; /* Или можно оставить, если хочешь видео на фоне */
+    }
+}
+
+/* Специальная сетка для контактов */
+.contacts-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(4, 1fr); /* Всегда 4 колонки */
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 900px) {
+    .contacts-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2x2 на средних экранах */
+    }
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 600px) {
+    .contacts-grid {
+        grid-template-columns: 1fr; /* 4x1 (столбцом) на телефонах */
+    }
+}
+
 .footer { 
     text-align: center; 
     padding: 30px; 

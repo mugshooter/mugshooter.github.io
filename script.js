@@ -105,23 +105,52 @@ const pages = {
     `,
     contacts: `
         <section class="hero">
-            <h2>Контакты</h2>
-            <div class="grid">
-                <a href="https://t.me/mugshooter" target="_blank" class="card">
-                    <i class="fab fa-telegram" style="color: #229ED9;"></i>
-                    <h3>Telegram</h3><p>@mugshooter ↗</p>
-                </a>
-                <a href="https://github.com/mugshooter" target="_blank" class="card">
-                    <i class="fab fa-github"></i>
-                    <h3>GitHub</h3><p>mugshooter ↗</p>
-                </a>
-                <a href="mailto:gnevnov2016@gmail.com" class="card">
-                    <i class="fas fa-envelope" style="color: #ea4335;"></i>
-                    <h3>Email</h3><p>Написать письмо ↗</p>
-                </a>
+            <div class="contacts-wrapper">
+                <div class="side-video left-video">
+                    <video autoplay loop muted playsinline class="puppy-video">
+                        <source src="sobaki.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="center-column">
+                <h2 style="margin-top: 30px;">Технологический стек</h2>
+                    <div class="skills-section">
+                        <p><strong>Backend & Systems:</strong> Go (gRPC, Protobuf, микросервисы), Docker.</p>
+                        <p><strong>AI Integration:</strong> Развертывание и интеграция LLM (Qwen, Ollama).</p>
+                        <p><strong>Frontend:</strong> Modern Web (HTML, CSS, JS).</p>
+                        <p><strong>В фокусе:</strong> Проектирование архитектуры высоконагруженных систем и AI-решений.</p>
+                    </div>
+
+                    <h2 style="margin-top: 30px;">Контакты</h2>
+                    <div class="contacts-grid">
+                        <a href="https://t.me/mugshooter" target="_blank" class="card">
+                            <i class="fab fa-telegram" style="color: #229ED9;"></i>
+                            <h3>Telegram</h3><p>@mugshooter ↗</p>
+                        </a>
+                        <a href="https://github.com/mugshooter" target="_blank" class="card">
+                            <i class="fab fa-github"></i>
+                            <h3>GitHub</h3><p>mugshooter ↗</p>
+                        </a>
+                        <a href="https://open.spotify.com/user/31f2yuvhbzab74kfakflnlz6uuzi?si=99325e5520c34acc" target="_blank" class="card">
+                            <i class="fab fa-spotify" style="color: #1DB954;"></i>
+                            <h3>Spotify</h3><p>Очень плохая музыка ↗</p>
+                        </a>
+                        <a href="mailto:gnevnov2016@gmail.com" class="card">
+                            <i class="fas fa-envelope" style="color: #ea4335;"></i>
+                            <h3>Email</h3><p>Написать письмо ↗</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="side-video right-video">
+                    <video autoplay loop muted playsinline class="puppy-video">
+                        <source src="sobaki.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
         </section>
     `,
+    
     portfolio: `
         <h2 style="text-align:center">Портфолио</h2>
         <h3 class="section-subtitle">🎓 Дипломная работа</h3>
