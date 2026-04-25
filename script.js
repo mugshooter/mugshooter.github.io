@@ -1,3 +1,16 @@
+// ==================== Константы ====================
+const CONFIG = {
+    EASTER_EGG_CLICKS: 5,
+    ANIMATION_DELAY: 0.05,
+    MATRIX_INTERVAL: 33,
+    MATRIX_FONT_SIZE: 16,
+    MATRIX_CHARS: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿ$#_>!&*@%",
+    MATRIX_MESSAGES: [
+        "ACCESS GRANTED", "DECRYPTING...", "SYSTEM OVERRIDE", 
+        "CONNECTING...", "INTRUSION DETECTED", "BYPASSING FIREWALL"
+    ]
+};
+
 const semesters = [
     { id: 1, title: "1 Семестр", subjects: [
         {name: "Дискретная математика", link: "https://github.com/mugshooter/repository/tree/main/1%20SEM/Дискретная%20математика%20для%20программистов"},
@@ -185,7 +198,7 @@ function navigate(pageId, updateHistory = true, extra = null) {
     }
 
     const cards = document.querySelectorAll('.card');
-    cards.forEach((card, i) => card.style.animationDelay = `${i * 0.05}s`);
+    cards.forEach((card, i) => card.style.animationDelay = `${i * CONFIG.ANIMATION_DELAY}s`);
 }
 
 function renderPortfolio() {
@@ -337,11 +350,13 @@ function unlockEasterEggButtons() {
     const hackerBtn = document.createElement('button');
     hackerBtn.id = 'hacker-theme-btn';
     hackerBtn.className = 'special-toggle';
+    hackerBtn.setAttribute('aria-label', 'Включить режим хакера');
     hackerBtn.innerHTML = '<i class="fas fa-user-secret"></i>';
 
     const retroBtn = document.createElement('button');
     retroBtn.id = 'retro-theme-btn';
     retroBtn.className = 'special-toggle';
+    retroBtn.setAttribute('aria-label', 'Включить ретровейв режим');
     retroBtn.innerHTML = '<i class="fas fa-meteor"></i>';
 
     themeToggle.after(retroBtn);
@@ -366,12 +381,25 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('.logo')) {
         logoClicks++;
         console.log("Logo clicks:", logoClicks);
-        if (logoClicks >= 5) {
+        if (logoClicks >= CONFIG.EASTER_EGG_CLICKS) {
             showEasterEggArt(); 
             logoClicks = 0;
         }
     }
 });
+
+// ==================== Обработка ошибок видео ====================
+function setupVideoErrorHandling() {
+    document.querySelectorAll('video').forEach(video => {
+        video.addEventListener('error', function() {
+            console.warn('Видео не загрузилось, скрываем элемент');
+            this.parentElement.style.display = 'none';
+        });
+    });
+}
+
+// Вызов при инициализации
+setupVideoErrorHandling();
 
 // Активация режима хакера
 function activateHackerMode() {
@@ -385,12 +413,12 @@ function activateHackerMode() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const charArray = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿ$#_>!&*@%".split("");
-    const fontSize = 16;
+    const charArray = CONFIG.MATRIX_CHARS.split("");
+    const fontSize = CONFIG.MATRIX_FONT_SIZE;
     const columns = Math.floor(canvas.width / fontSize);
     const drops = Array(columns).fill(1);
 
-    const messages = ["ACCESS GRANTED", "DECRYPTING...", "SYSTEM OVERRIDE", "CONNECTING...", "INTRUSION DETECTED", "BYPASSING FIREWALL"];
+    const messages = CONFIG.MATRIX_MESSAGES;
     let currentMsg = { text: "", x: 0, y: 0, alpha: 0, active: false };
 
     function draw() {
@@ -425,5 +453,5 @@ function activateHackerMode() {
         }
     }
 
-    matrixInterval = setInterval(draw, 33);
+    matrixInterval = setInterval(draw, CONFIG.MATRIX_INTERVAL);
 }
