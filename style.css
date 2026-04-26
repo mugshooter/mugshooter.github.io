@@ -648,6 +648,43 @@ body.retrowave-mode #retro-theme-btn {
     .contacts-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 700px) {
+    .navbar {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        position: relative;
+    }
+    .logo {
+        order: 1;
+        flex: 0 0 auto;
+    }
+    #nav-eye-container {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        flex: 0 0 auto;
+        margin: 0 8px;
+        height: 28px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        order: 2;
+    }
+    .burger {
+        order: 3;
+        margin-left: auto;
+        flex: 0 0 auto;
+    }
+    .nav-eye {
+        height: 28px !important;
+        width: auto !important;
+        margin: 0;
+    }
+}
+
 @media (max-width: 768px) {
     .navbar {
         justify-content: space-between;
