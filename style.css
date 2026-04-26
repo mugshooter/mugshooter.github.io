@@ -36,11 +36,29 @@ body.hacker-mode {
     --skills-strong: #00ff00;
 }
 
+body.hacker-mode .eye-svg {
+    color: #00ff00;
+    filter: drop-shadow(0 0 8px #00ff00);
+}
+
+body.hacker-mode .eye-pupil {
+    fill: #000;
+}
+
 body.retrowave-mode {
     --skills-bg: rgba(20, 0, 40, 0.9);
     --skills-border: #ff00ff;
     --skills-text: #fff;
     --skills-strong: #00ffff;
+}
+
+body.retrowave-mode .eye-svg {
+    color: #ff00ff;
+    filter: drop-shadow(0 0 8px #ff00ff);
+}
+
+body.retrowave-mode .eye-pupil {
+    fill: #0a0a0a;
 }
 
 /* ==================== Базовые стили ==================== */
@@ -66,7 +84,7 @@ body {
 /* ==================== Навигация ==================== */
 .navbar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     padding: 0.8rem 2rem;
     background: var(--navbar-bg);
@@ -78,9 +96,11 @@ body {
     z-index: 1000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: background-color 0.4s ease;
+    position: relative;
 }
 
 .logo {
+    flex: 0 0 auto;
     font-weight: 700;
     color: white;
     text-decoration: none;
@@ -95,6 +115,7 @@ body {
 .logo i { margin-right: 8px; color: var(--accent); }
 
 .nav-links {
+    flex: 0 0 auto;
     list-style: none;
     display: flex;
     gap: 25px;
@@ -160,16 +181,47 @@ main {
 
 .main-icon {
     display: inline-block;
-    animation: floating 4s ease-in-out infinite;
     transition: color 0.4s ease;
 }
 
-@keyframes floating {
-    0% { transform: translate(0, 0); }
-    25% { transform: translate(10px, -15px); }
-    50% { transform: translate(-10px, -20px); }
-    75% { transform: translate(-5px, -10px); }
-    100% { transform: translate(0, 0); }
+
+.eye-svg {
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+
+#nav-eye-container {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.nav-eye {
+    height: 35px;
+    width: auto;
+    margin: 0;
+    display: block;
+}
+
+.eye-white {
+    transition: fill 0.4s ease;
+}
+
+@keyframes blink {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.1); }
+}
+
+.eye-svg.blinking {
+    animation: blink 0.2s ease-in-out;
+    transform-origin: center;
 }
 
 .section-subtitle {

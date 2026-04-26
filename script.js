@@ -110,7 +110,11 @@ const contentDiv = document.getElementById('content');
 const pages = {
     home: `
         <section class="hero">
-            <i class="fa-regular fa-eye main-icon" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px; display: inline-block;"></i>
+            <svg class="main-icon eye-svg" viewBox="0 0 100 60" width="120" height="72">
+                <ellipse class="eye-white" cx="50" cy="30" rx="45" ry="25" fill="currentColor" opacity="0.2"/>
+                <ellipse class="eye-iris" cx="50" cy="30" rx="18" ry="18" fill="currentColor"/>
+                <circle class="eye-pupil" cx="50" cy="30" r="8" fill="var(--bg-color)"/>
+            </svg>
             <h1>Гневнов Артем</h1>
             <h3>Студент ИВТ РГПУ им. А.И. Герцена</h3>
             <p>В этом портфолио представлены мои работы и проекты, реализованные в ходе обучения.</p>
@@ -179,7 +183,7 @@ const pages = {
 
 function navigate(pageId, updateHistory = true, extra = null) {
     contentDiv.innerHTML = pages[pageId] || pages['home'];
-    
+
     if (pageId === 'portfolio') {
         renderPortfolio();
         if (extra) {
@@ -187,7 +191,29 @@ function navigate(pageId, updateHistory = true, extra = null) {
             if (sem) showSubjects(sem, false); 
         }
     }
-    
+
+    // Управление глазом в шапке
+    const navEyeContainer = document.getElementById('nav-eye-container');
+    if (navEyeContainer) {
+        if (pageId === 'contacts' || pageId === 'portfolio') {
+            navEyeContainer.innerHTML = `
+                <svg class="nav-eye eye-svg" viewBox="0 0 100 60">
+                    <ellipse class="eye-white" cx="50" cy="30" rx="45" ry="25" fill="currentColor" opacity="0.2"/>
+                    <ellipse class="eye-iris" cx="50" cy="30" rx="18" ry="18" fill="currentColor"/>
+                    <circle class="eye-pupil" cx="50" cy="30" r="8" fill="var(--bg-color)"/>
+                </svg>
+            `;
+            setTimeout(initEyeTracking, 0);
+        } else {
+            navEyeContainer.innerHTML = '';
+        }
+    }
+
+    // Глаз на главной
+    if (pageId === 'home') {
+        setTimeout(initEyeTracking, 0);
+    }
+
     if (updateHistory) {
         const url = new URL(window.location);
         url.searchParams.set('page', pageId);
@@ -387,6 +413,59 @@ document.addEventListener('click', (e) => {
         }
     }
 });
+
+// ==================== Глаз следящий за мышкой ====================
+let eyeSvg = null;
+let eyePupil = null;
+let targetX = 0;
+let targetY = 0;
+let blinkInterval = null;
+
+function initEyeTracking() {
+    eyeSvg = document.querySelector('.eye-svg');
+    eyePupil = document.querySelector('.eye-pupil');
+    if (!eyeSvg || !eyePupil) return;
+    
+    // Удаляем старый обработчик чтобы не было дубликатов
+    document.removeEventListener('mousemove', onMouseMove);
+    document.addEventListener('mousemove', onMouseMove);
+    
+    // Очищаем старый интервал
+    if (blinkInterval) clearInterval(blinkInterval);
+    blinkInterval = setInterval(blinkEye, 4000);
+}
+
+function onMouseMove(e) {
+    const rect = eyeSvg.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    const maxOffset = 10;
+    const deltaX = e.clientX - centerX;
+    const deltaY = e.clientY - centerY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    if (distance > 0) {
+        const scale = Math.min(distance / 150, 1);
+        targetX = (deltaX / distance) * maxOffset * scale;
+        targetY = (deltaY / distance) * maxOffset * scale;
+    }
+    
+    if (eyePupil) {
+        eyePupil.setAttribute('cx', 50 + targetX);
+        eyePupil.setAttribute('cy', 30 + targetY);
+    }
+}
+
+function blinkEye() {
+    const svg = document.querySelector('.eye-svg');
+    if (svg) {
+        svg.classList.add('blinking');
+        setTimeout(() => svg.classList.remove('blinking'), 300);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initEyeTracking);
 
 // ==================== Обработка ошибок видео ====================
 function setupVideoErrorHandling() {
