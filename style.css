@@ -81,6 +81,35 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+/* ==================== Индикатор скролла ==================== */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--primary);
+    width: 0%;
+    z-index: 2000;
+    transition: width 0.1s ease-out;
+}
+
+/* ==================== Плавные переходы страниц ==================== */
+#content {
+    animation: fadeIn 0.3s ease-out;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ==================== Навигация ==================== */
 .navbar {
     display: flex;

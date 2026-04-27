@@ -190,15 +190,24 @@ const pages = {
 };
 
 function navigate(pageId, updateHistory = true, extra = null) {
-    contentDiv.innerHTML = pages[pageId] || pages['home'];
-
-    if (pageId === 'portfolio') {
-        renderPortfolio();
-        if (extra) {
-            const sem = semesters.find(s => s.id == extra);
-            if (sem) showSubjects(sem, false); 
+    // Плавный переход
+    contentDiv.style.opacity = '0';
+    contentDiv.style.transform = 'translateY(10px)';
+    
+    setTimeout(() => {
+        contentDiv.innerHTML = pages[pageId] || pages['home'];
+        
+        // Запускаем анимацию появления
+        contentDiv.style.opacity = '1';
+        contentDiv.style.transform = 'translateY(0)';
+        
+        if (pageId === 'portfolio') {
+            renderPortfolio();
+            if (extra) {
+                const sem = semesters.find(s => s.id == extra);
+                if (sem) showSubjects(sem, false); 
+            }
         }
-    }
 
     // Управление глазом в шапке
     const navEyeContainer = document.getElementById('nav-eye-container');
@@ -241,6 +250,7 @@ function navigate(pageId, updateHistory = true, extra = null) {
 
     const cards = document.querySelectorAll('.card');
     cards.forEach((card, i) => card.style.animationDelay = `${i * CONFIG.ANIMATION_DELAY}s`);
+    });
 }
 
 function renderPortfolio() {
@@ -507,6 +517,18 @@ function blinkEye() {
 }
 
 document.addEventListener('DOMContentLoaded', initEyeTracking);
+
+// ==================== Индикатор скролла ====================
+window.addEventListener('scroll', () => {
+    const scrollProgress = document.getElementById('scroll-progress');
+    if (!scrollProgress) return;
+    
+    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollTop = window.scrollY;
+    const scrollPercent = (scrollTop / windowHeight) * 100;
+    
+    scrollProgress.style.width = scrollPercent + '%';
+});
 
 // ==================== Обработка ошибок видео ====================
 function setupVideoErrorHandling() {
