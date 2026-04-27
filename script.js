@@ -111,9 +111,17 @@ const pages = {
     home: `
         <section class="hero">
             <svg class="main-icon eye-svg" viewBox="0 0 100 60" width="120" height="72">
-                <ellipse class="eye-white" cx="50" cy="30" rx="45" ry="25" fill="currentColor" opacity="0.2"/>
-                <ellipse class="eye-iris" cx="50" cy="30" rx="18" ry="18" fill="currentColor"/>
-                <circle class="eye-pupil" cx="50" cy="30" r="8" fill="var(--bg-color)"/>
+                <defs>
+                    <radialGradient id="irisGradientHome" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="currentColor" stop-opacity="1"/>
+                        <stop offset="70%" stop-color="currentColor" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+                    </radialGradient>
+                </defs>
+                <ellipse class="eye-white" cx="50" cy="30" rx="45" ry="25" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="1.5"/>
+                <ellipse class="eye-iris" cx="50" cy="30" rx="18" ry="18" fill="url(#irisGradientHome)"/>
+                <circle class="eye-pupil" cx="50" cy="30" r="7" fill="var(--bg-color)"/>
+                <ellipse class="eye-highlight" cx="44" cy="24" rx="3" ry="2" fill="white" opacity="0.5"/>
             </svg>
             <h1>Гневнов Артем</h1>
             <h3>Студент ИВТ РГПУ им. А.И. Герцена</h3>
@@ -198,9 +206,17 @@ function navigate(pageId, updateHistory = true, extra = null) {
         if (pageId === 'contacts' || pageId === 'portfolio') {
             navEyeContainer.innerHTML = `
                 <svg class="nav-eye eye-svg" viewBox="0 0 100 60">
-                    <ellipse class="eye-white" cx="50" cy="30" rx="45" ry="25" fill="currentColor" opacity="0.2"/>
-                    <ellipse class="eye-iris" cx="50" cy="30" rx="18" ry="18" fill="currentColor"/>
-                    <circle class="eye-pupil" cx="50" cy="30" r="8" fill="var(--bg-color)"/>
+                    <defs>
+                        <radialGradient id="irisGradient" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="currentColor" stop-opacity="1"/>
+                            <stop offset="70%" stop-color="currentColor" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+                        </radialGradient>
+                    </defs>
+                    <ellipse class="eye-white" cx="50" cy="30" rx="45" ry="25" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="1.5"/>
+                    <ellipse class="eye-iris" cx="50" cy="30" rx="18" ry="18" fill="url(#irisGradient)"/>
+                    <circle class="eye-pupil" cx="50" cy="30" r="7" fill="var(--bg-color)"/>
+                    <ellipse class="eye-highlight" cx="44" cy="24" rx="3" ry="2" fill="white" opacity="0.5"/>
                 </svg>
             `;
             setTimeout(initEyeTracking, 0);
@@ -419,6 +435,8 @@ let eyeSvg = null;
 let eyePupil = null;
 let targetX = 0;
 let targetY = 0;
+let eyeOffsetX = 0;
+let eyeOffsetY = 0;
 let blinkInterval = null;
 
 function initEyeTracking() {
@@ -454,6 +472,29 @@ function onMouseMove(e) {
     if (eyePupil) {
         eyePupil.setAttribute('cx', 50 + targetX);
         eyePupil.setAttribute('cy', 30 + targetY);
+    }
+    
+    // Параллакс для главного глаза (только на главной странице)
+    const mainEye = document.querySelector('.main-icon.eye-svg');
+    if (mainEye) {
+        const page = new URLSearchParams(window.location.search).get('page') || 'home';
+        if (page === 'home') {
+            const windowCenterX = window.innerWidth / 2;
+            const windowCenterY = window.innerHeight / 2;
+            const parallaxScale = 0.03;
+            const targetOffsetX = (e.clientX - windowCenterX) * parallaxScale;
+            const targetOffsetY = (e.clientY - windowCenterY) * parallaxScale;
+            
+            // Плавная интерполяция
+            eyeOffsetX += (targetOffsetX - eyeOffsetX) * 0.1;
+            eyeOffsetY += (targetOffsetY - eyeOffsetY) * 0.1;
+            
+            mainEye.style.transform = `translate(${eyeOffsetX}px, ${eyeOffsetY}px)`;
+        } else {
+            mainEye.style.transform = 'translate(0, 0)';
+            eyeOffsetX = 0;
+            eyeOffsetY = 0;
+        }
     }
 }
 
