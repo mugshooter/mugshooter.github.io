@@ -579,6 +579,20 @@ body.hacker-mode a {
         0 0 10px rgba(0, 255, 0, 0.5) !important;
 }
 
+body.hacker-mode .contacts-grid .card p,
+body.retrowave-mode .contacts-grid .card p {
+    text-shadow: none !important;
+    font-size: 0.95rem;
+    margin: 8px 0 0;
+    line-height: 1.4;
+    word-spacing: -0.05em;
+}
+
+body.hacker-mode .contacts-grid .card,
+body.retrowave-mode .contacts-grid .card {
+    padding: 20px 15px;
+}
+
 body.hacker-mode .subject-card span {
     color: #00ff00 !important;
     opacity: 1 !important;
@@ -628,7 +642,15 @@ body.retrowave-mode .btn-back {
     border: 2px solid #00ffff !important;
     box-shadow: 0 0 15px #ff00ff, inset 0 0 10px #ff00ff !important;
     color: #fff !important;
+}
+
+body.retrowave-mode .semester-card,
+body.retrowave-mode .subject-card {
     transform: skewX(-1deg);
+}
+
+body.retrowave-mode .contacts-grid .card {
+    transform: none !important;
 }
 
 body.retrowave-mode h1,
