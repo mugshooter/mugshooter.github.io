@@ -80,7 +80,13 @@ const semesters = [
         {name: "Организация электронной образовательной среды", link: "https://github.com/mugshooter/repository/tree/main/7%20SEM/Организация%20электронной%20образовательной%20среды"}
     ]},
     { id: 8, title: "8 Семестр", subjects: [
-        {name: "Дипломное проектирование", link: "#"}
+        {name: "IT-рекрутмент", link: "https://github.com/mugshooter/repository/tree/main/8%20SEM/IT-рекрутмент"},
+        {name: "Английский", link: "https://github.com/mugshooter/repository/tree/main/8%20SEM/Английский"},
+        {name: "Инф. технологии оценки персонала", link: "https://github.com/mugshooter/repository/tree/main/8%20SEM/Инф.%20технологии%20оценки%20персонала"},
+        {name: "Мировые инф. ресурсы и цифровые библиотеки", link: "https://github.com/mugshooter/repository/tree/main/8%20SEM/Мировые%20инф.%20ресурсы%20и%20цифровые%20библиотеки"},
+        {name: "Научно-исследовательский проект", link: "https://github.com/mugshooter/repository/tree/main/8%20SEM/Научно-исследовательский%20проект"},
+        {name: "Соц. и профф. вопросы информатики и ИТ", link: "https://github.com/mugshooter/repository/tree/main/8%20SEM/Соц.%20и%20профф.%20вопросы%20информатики%20и%20ИТ"},
+        {name: "Языки написания спецификаций", link: "https://github.com/mugshooter/repository/tree/main/8%20SEM/Языки%20написания%20спецификаций"}
     ]}
 ];
 
@@ -89,7 +95,7 @@ const internships = [
     { title: "Учебная (технологическая)", link: "https://github.com/mugshooter/repository/tree/main/Практика%202%20курс" },
     { title: "Производственная (технологическая)", link: "https://github.com/mugshooter/repository/tree/main/Практика%203%20курс" },
     { title: "Производственная (НИР)", link: "https://github.com/mugshooter/repository/tree/main/Практика%204%20курс" },
-    { title: "Производственная (преддипломная)", link: "#" }
+    { title: "Производственная (преддипломная)", link: "https://github.com/mugshooter/repository/tree/main/Практика%20преддипломная" }
 ];
 
 const courseWorks = [
@@ -102,7 +108,7 @@ const courseWorks = [
 const vkr = {
     title: "ВКР (Диплом)",
     topic: "Разработка AI-сервиса техподдержки",
-    link: "#"
+    link: "https://github.com/mugshooter/repository/tree/main/ВКР"
 };
 
 const contentDiv = document.getElementById('content');
