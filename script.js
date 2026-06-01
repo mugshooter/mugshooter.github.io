@@ -111,6 +111,10 @@ const vkr = {
     link: "https://github.com/mugshooter/repository/tree/main/ВКР"
 };
 
+const articles = [
+    { title: "Разработка системы управления задачами на базе Telegram-бота", link: "https://github.com/mugshooter/repository/tree/main/Статьи/Разраб.%20сист.%20управ.%20задачами%20на%20базе%20Tg%20бота" }
+];
+
 const contentDiv = document.getElementById('content');
 
 const pages = {
@@ -190,6 +194,8 @@ const pages = {
         <div class="grid" id="cw-grid"></div>
         <h3 class="section-subtitle">🛠️ Практики</h3>
         <div class="grid" id="intern-grid"></div>
+        <h3 class="section-subtitle">✍️ Статьи</h3>
+        <div class="grid" id="articles-grid"></div>
         <h3 class="section-subtitle">📚 Семестры</h3>
         <div class="grid" id="sem-grid"></div>
     `
@@ -271,6 +277,12 @@ function renderPortfolio() {
     internships.forEach(int => {
         document.getElementById('intern-grid').innerHTML += `<a href="${int.link}" target="_blank" class="card"><h3>${int.title}</h3><p>Материалы ↗</p></a>`;
     });
+    const articlesDiv = document.createElement('div');
+    articlesDiv.className = 'card';
+    articlesDiv.style.cursor = 'pointer';
+    articlesDiv.innerHTML = `<h3>Все статьи</h3><p>Статьи и гайды</p>`;
+    articlesDiv.onclick = () => showArticles();
+    document.getElementById('articles-grid').appendChild(articlesDiv);
     semesters.forEach(sem => {
         const div = document.createElement('div');
         div.className = 'card'; div.style.cursor = 'pointer';
@@ -278,6 +290,19 @@ function renderPortfolio() {
         div.onclick = () => showSubjects(sem);
         document.getElementById('sem-grid').appendChild(div);
     });
+}
+
+function showArticles() {
+    contentDiv.innerHTML = `
+        <button class="btn-back" onclick="navigate('portfolio')"><i class="fas fa-arrow-left"></i> Назад</button>
+        <h2>Статьи</h2>
+        <div class="grid">${articles.map(a => `
+            <a href="${a.link}" target="_blank" class="card">
+                <h3>${a.title}</h3>
+                <p>Читать ↗</p>
+            </a>`).join('')}
+        </div>
+    `;
 }
 
 function showSubjects(sem, updateHistory = true) {
